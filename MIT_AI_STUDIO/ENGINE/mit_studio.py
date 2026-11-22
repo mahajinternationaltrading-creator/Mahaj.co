@@ -778,8 +778,9 @@ def cmd_render(ws: Workspace, args):
             f"color=c={BRAND['dark']}:s={W}x{H}:r={FPS}:d={d},"
             f"drawbox=x=(iw-520)/2:y=ih/2+40:w=260:h=10:color={BRAND['red']}:t=fill,"
             f"drawbox=x=iw/2:y=ih/2+40:w=260:h=10:color={BRAND['green']}:t=fill,"
-            f"drawtext=fontfile={fontfile}:text='{l1}':fontsize=96:fontcolor=white:x=(w-tw)/2:y=h/2-110,"
-            if l1 else ""
+            + (f"drawtext=fontfile={fontfile}:text='{l1}':fontsize=96:fontcolor=white:x=(w-tw)/2:y=h/2-110,"
+               if l1.strip() else "")
+            +
             f"drawtext=fontfile={fontfile}:text='{l2}':fontsize=44:fontcolor=white@0.85:x=(w-tw)/2:y=h/2+90,"
             f"fade=t=in:st=0:d=0.4,setsar=1,format=yuv420p" + ("[ecb]" if ec.get("logo") else f"[v{n_shots}]"))
         if ec.get("logo"):  # official transparent PNG, centred above the text
@@ -847,7 +848,11 @@ def cmd_render(ws: Workspace, args):
 def cmd_qc(ws: Workspace, args):
     t0 = time.time()
     path = Path(args.video)
+    if not path.exists() or path.stat().st_size == 0:
+        sys.exit(f"qc: video not found or empty: {path}")
     m = probe(path)
+    if m.get("error"):
+        sys.exit(f"qc: cannot read video: {m['error']}")
     p = run(["ffmpeg", "-hide_banner", "-nostats", "-i", str(path), "-vf",
              f"scale=270:-2,scdet=threshold={SCDET_THRESHOLD}:sc_pass=0,"
              "blackdetect=d=0.3:pic_th=0.97,freezedetect=n=0.003:d=1.5", "-af", "ebur128=peak=true",
