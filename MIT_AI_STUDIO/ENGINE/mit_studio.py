@@ -753,7 +753,9 @@ def cmd_render(ws: Workspace, args):
         s = segs[sid]
         a = float(shot.get("in", s["start"]))
         speed = float(shot.get("speed", 1.0))
-        out_d = float(shot["dur"])
+        # snap cumulative cut points to whole frames so beat-timed EDLs do not drift
+        cum0 = sum(durs)
+        out_d = round((cum0 + float(shot["dur"])) * FPS) / FPS - round(cum0 * FPS) / FPS
         src_d = out_d * speed
         if a + src_d > s["end"] + 0.05:
             sys.exit(f"shot {n + 1}: {sid} needs {src_d:.2f}s from {a} but segment ends at {s['end']}")
@@ -884,6 +886,8 @@ def cmd_qc(ws: Workspace, args):
     hook_cuts = len([c for c in hook_scd if 0.05 < c < 2.0])
     hook_luma = float(np.mean([x["luma"] for x in met])) if met else 0
     exp_w, exp_h = args.width, args.height
+    objective = args.objective or ("energy" if re.search(r"energy|viral|V02", path.stem, re.I) else "other")
+    energy = objective == "energy"   # uniform rhythm is a defect for energy edits, a style elsewhere
     silent = lufs is None or lufs < -60
     checks = [
         ("dimensions", (m["width"], m["height"]) == (exp_w, exp_h), f"{m['width']}x{m['height']} (want {exp_w}x{exp_h})"),
@@ -898,7 +902,8 @@ def cmd_qc(ws: Workspace, args):
         ("true_peak_<=-1dB", peak is not None and peak <= -1.0, f"{peak}"),
         ("hook_first_2s_active", hook_motion > 3 or hook_cuts >= 1, f"motion {hook_motion:.1f}, cuts {hook_cuts}"),
         ("hook_first_2s_not_dark", hook_luma > 35, f"luma {hook_luma:.0f}"),
-        ("rhythm_not_uniform", len(cut_t) < 8 or same_len_share < 0.6,
+        ("rhythm_not_uniform" + ("" if energy else " (info only)"),
+         (not energy) or len(cut_t) < 8 or same_len_share < 0.6,
          f"{len(cut_t)} cuts, avg shot {shots.mean() if len(shots) else 0:.2f}s, CV {shot_cv:.2f}, "
          f"{same_len_share * 100:.0f}% of shots the same length (±0.1 s)"),
     ]
@@ -1054,6 +1059,8 @@ def main():
     s = sub.add_parser("qc"); s.add_argument("video"); s.add_argument("--width", type=int, default=1080)
     s.add_argument("--height", type=int, default=1920)
     s.add_argument("--beats", help="beats JSON from the music command, to measure cut-to-beat sync")
+    s.add_argument("--objective", choices=["energy", "cinematic", "portfolio", "other"],
+                   help="default: inferred from the file name (energy/viral/V02 -> energy)")
     s = sub.add_parser("music", help="original licence-free music bed + beat map")
     s.add_argument("--style", choices=["cinematic", "energy", "corporate"], required=True)
     s.add_argument("--bpm", type=float); s.add_argument("--dur", type=float, default=40)

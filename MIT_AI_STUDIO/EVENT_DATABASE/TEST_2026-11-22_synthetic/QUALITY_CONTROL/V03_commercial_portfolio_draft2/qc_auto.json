@@ -72,6 +72,11 @@
       "check": "hook_first_2s_not_dark",
       "pass": true,
       "value": "luma 122"
+    },
+    {
+      "check": "rhythm_not_uniform (info only)",
+      "pass": true,
+      "value": "13 cuts, avg shot 2.55s, CV 0.33, 69% of shots the same length (±0.1 s)"
     }
   ],
   "technical_pass": true,

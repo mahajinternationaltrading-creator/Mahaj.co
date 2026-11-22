@@ -1,0 +1,89 @@
+{
+  "video": "V02_viral_energy_draft2.mp4",
+  "probe": {
+    "codec": "h264",
+    "width": 1080,
+    "height": 1920,
+    "coded_w": 1080,
+    "coded_h": 1920,
+    "rotation": 0,
+    "fps": 30.0,
+    "duration": 32.933,
+    "orientation": "vertical",
+    "bitrate": 8308490,
+    "pix_fmt": "yuv420p",
+    "color_transfer": null,
+    "audio": true,
+    "audio_codec": "aac",
+    "creation_time": null
+  },
+  "checks": [
+    {
+      "check": "dimensions",
+      "pass": true,
+      "value": "1080x1920 (want 1080x1920)"
+    },
+    {
+      "check": "duration_30_40s",
+      "pass": true,
+      "value": "32.93s"
+    },
+    {
+      "check": "fps",
+      "pass": true,
+      "value": "30.0"
+    },
+    {
+      "check": "codec",
+      "pass": true,
+      "value": "h264/yuv420p"
+    },
+    {
+      "check": "no_black_gaps",
+      "pass": true,
+      "value": "[]"
+    },
+    {
+      "check": "no_frozen_picture",
+      "pass": true,
+      "value": "[]"
+    },
+    {
+      "check": "audio_present",
+      "pass": true,
+      "value": "ok"
+    },
+    {
+      "check": "loudness_-16_to_-12_LUFS",
+      "pass": true,
+      "value": "-13.9"
+    },
+    {
+      "check": "true_peak_<=-1dB",
+      "pass": true,
+      "value": "-1.5"
+    },
+    {
+      "check": "hook_first_2s_active",
+      "pass": true,
+      "value": "motion 17.0, cuts 2"
+    },
+    {
+      "check": "hook_first_2s_not_dark",
+      "pass": true,
+      "value": "luma 73"
+    },
+    {
+      "check": "rhythm_not_uniform",
+      "pass": true,
+      "value": "31 cuts, avg shot 1.03s, CV 0.51, 39% of shots the same length (±0.1 s)"
+    },
+    {
+      "check": "cuts_on_beat_>=70%",
+      "pass": true,
+      "value": "100% of cuts within 70 ms of a beat"
+    }
+  ],
+  "technical_pass": true,
+  "note": "Automatic checks only. Storytelling, rhythm, brand and objective are judged by the quality-controller agent from the review sheets; music/sync must be confirmed by ear."
+}
