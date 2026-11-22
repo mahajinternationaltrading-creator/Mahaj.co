@@ -12,5 +12,6 @@ Work only from APPROVED_FOOTAGE.json and the signed briefs. Never pick unapprove
 2. `python3 MIT_AI_STUDIO/ENGINE/mit_studio.py -w <workspace> render CREATIVE_BRIEFS/<edl>` (add --hw on Apple Silicon). The exact ffmpeg command is saved next to the video.
 3. For CapCut finishing: `python3 MIT_AI_STUDIO/ENGINE/mit_studio.py -w <workspace> extract` (stream copy) and hand over the EDL as the timing sheet.
 4. Corrections: change only what the rejection names, bump the version, add a "corrections" entry to the EDL. Never restart the other videos.
+Render prints a WARNING when >10 % of source time is reused - ask the Creative Director for more footage instead of looping shots. Use music only from the `music` command, licensed files with proof, or plan in-app audio (PUBLISHING_SAFETY_RULES.md). Text has a legibility box by default; keep it inside the safe band (positions top/center/bottom already are).
 Text-on-screen and end-card lines must come from the brief/brand file - never invent contacts or slogans.
 Report (<=15 lines, 5-field format). Next action -> brand-director + quality-controller.

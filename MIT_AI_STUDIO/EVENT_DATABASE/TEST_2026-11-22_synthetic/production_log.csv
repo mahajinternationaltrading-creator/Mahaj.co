@@ -56,3 +56,6 @@ timestamp,stage,seconds,details
 2026-11-22T21:50:00,qc-auto,6.4,"{""video"": ""V03_commercial_portfolio_draft2"", ""technical_pass"": false}"
 2026-11-22T21:50:21,qc-auto,6.2,"{""video"": ""V03_commercial_portfolio_draft2"", ""technical_pass"": true}"
 2026-11-22T21:50:28,qc-auto,7.2,"{""video"": ""V02_viral_energy_draft1"", ""technical_pass"": false}"
+2026-11-22T21:52:09,render,17.0,"{""video"": ""V02_viral_energy"", ""shots"": 31, ""seconds_out"": 32.9, ""re_encoded"": ""final render only""}"
+2026-11-22T21:52:55,render,16.7,"{""video"": ""V02_viral_energy"", ""shots"": 31, ""seconds_out"": 32.9, ""source_reuse_pct"": 73.0, ""re_encoded"": ""final render only""}"
+2026-11-22T21:53:02,qc-auto,5.9,"{""video"": ""V02_viral_energy_draft3"", ""technical_pass"": true}"

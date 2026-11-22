@@ -1,6 +1,7 @@
 # MIT_eventss AI Studio — Operating System v1.0 (2026-11-22)
 
-One studio, seven departments, one Studio Manager. The goal is better videos with less
+One studio, seven departments, one Studio Manager. MIT_eventss is the events trade name of
+**Mahaj International Trading**. Blocking safety rules: `PUBLISHING_SAFETY_RULES.md`. The goal is better videos with less
 processing, not more AI activity.
 
 ## 1. Event workspace (one per event)

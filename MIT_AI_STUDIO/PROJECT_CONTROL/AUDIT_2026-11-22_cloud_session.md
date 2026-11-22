@@ -162,3 +162,17 @@ migration plan validates these on the real gala dinner.
   finishing tools until reconciled (step 2–3).
 - Speed on 30–50 GB is an estimate until measured on the Mac. Keyframe-first decoding at
   320 px is designed for it, and `detect --max-seconds` lets long events resume in batches.
+
+## 11. Update — actions taken under the owner's delegation (22 Nov, evening)
+
+| Item | Result |
+|---|---|
+| Run on the Mac / install ffmpeg on macOS | **Not possible from this session**: no computer is connected to it. Owner action remains (see §9 #1–2). |
+| Real footage | Google Drive connector downloads ≤ 10 MB only; one real MIT_eventss reel (Kermesse) tested → found and fixed a major cut-detection gap (1/23 → 22/23 cuts, 0 false). See `REAL_FOOTAGE_VALIDATION_2026-11-22.md`. |
+| Brand | On-screen `MIT_eventss` / `@mit_eventss`; official transparent logo from Drive; colours verified on the logo pixels. **Owner: Mahaj International Trading** recorded everywhere legal text can appear. |
+| Music | Original, licence-free beds with beat maps (`music` command); beat timing verified at +2.9 ms. |
+| Safety | `PUBLISHING_SAFETY_RULES.md`: Instagram/TikTok blocking risks (copyright audio, watermarks, minors, paid partnership, spam signals, safe zones, export specs) and web/public-repo rules — blocking at G9/G10. |
+| Agents in real use | video-editor, brand-director and quality-controller ran as registered agents: the editor found an engine bug and stopped within scope; QC escalated after two rounds exactly as the rules require. |
+| Errors corrected | cut detection on real footage; QC hook-cut count; uniform-rhythm check (energy only); beat-sync check; end-card string bug; end-card layout/flash; text legibility box; hook text inside the 4:5 feed crop; frame-snapped cuts; Instagram encode (≤ 20 Mbps, Rec.709); QC relative paths and missing-file crash; source-reuse warning. |
+| Privacy | Repository found **public**. Real-event workspaces and the private earlier audit are no longer tracked. The earlier audit .docx still exists in the history of commit `d5d5c2f` — removing it needs a history rewrite (blocked pending the owner's explicit OK) or making the repository private. |
+| Still needs the owner | Mac connection; consent for children/guests; repo visibility or history rewrite; slogan/contact line for the brand file; first real event once the Mac is reachable. |

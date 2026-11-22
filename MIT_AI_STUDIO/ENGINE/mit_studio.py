@@ -772,6 +772,18 @@ def cmd_render(ws: Workspace, args):
             f"trim=duration={out_d},setpts=PTS-STARTPTS[v{n}]")
         durs.append(out_d)
     n_shots = len(durs)
+    # reuse lint: the same source frames shown twice reads as padding (QC lesson, 22 Nov)
+    rng_ = []
+    for shot in edl["shots"]:
+        a = float(shot.get("in", segs[shot["seg"]]["start"]))
+        rng_.append((shot["seg"], a, a + float(shot["dur"]) * float(shot.get("speed", 1.0))))
+    overlap = sum(max(0.0, min(b1, b2) - max(a1, a2))
+                  for i, (s1, a1, b1) in enumerate(rng_) for (s2, a2, b2) in rng_[i + 1:] if s1 == s2)
+    used = sum(b - a for _, a, b in rng_)
+    reuse_pct = 100 * overlap / used if used else 0
+    if reuse_pct > 10:
+        print(f"render WARNING: {reuse_pct:.0f}% of source time is shown more than once - "
+              f"ask the Creative Director for more approved footage (rule: >= 2x runtime)")
     ec = edl.get("end_card")
     if ec:
         d = float(ec.get("dur", 2.5))
@@ -781,10 +793,10 @@ def cmd_render(ws: Workspace, args):
             f"drawbox=x=(iw-520)/2:y=ih/2+40:w=260:h=10:color={BRAND['red']}:t=fill,"
             f"drawbox=x=iw/2:y=ih/2+40:w=260:h=10:color={BRAND['green']}:t=fill,"
             + (f"drawtext=fontfile={fontfile}:text='{l1}':fontsize=96:fontcolor=white:x=(w-tw)/2:y=h/2-110,"
-               if l1.strip() else "")
+               if l1.strip() and not ec.get("logo") else "")   # logo replaces the name line
             +
-            f"drawtext=fontfile={fontfile}:text='{l2}':fontsize=44:fontcolor=white@0.85:x=(w-tw)/2:y=h/2+90,"
-            f"fade=t=in:st=0:d=0.4,setsar=1,format=yuv420p" + ("[ecb]" if ec.get("logo") else f"[v{n_shots}]"))
+            f"drawtext=fontfile={fontfile}:text='{l2}':fontsize=60:fontcolor=white:x=(w-tw)/2:y=h/2+90,"
+            f"fade=t=in:st=0:d=0.15,setsar=1,format=yuv420p" + ("[ecb]" if ec.get("logo") else f"[v{n_shots}]"))
         if ec.get("logo"):  # official transparent PNG, centred above the text
             logo = Path(ec["logo"]).expanduser()
             if not logo.exists():
@@ -792,8 +804,8 @@ def cmd_render(ws: Workspace, args):
             li = len(inputs_meta)
             inputs += ["-loop", "1", "-t", f"{d:.3f}", "-i", str(logo)]
             inputs_meta.append("logo")
-            chains.append(f"[{li}:v]scale={int(W * 0.45)}:-1,format=rgba,fade=t=in:st=0:d=0.4:alpha=1[lg];"
-                          f"[ecb][lg]overlay=(W-w)/2:H*0.18,format=yuv420p[v{n_shots}]")
+            chains.append(f"[{li}:v]scale={int(W * 0.45)}:-1,format=rgba,fade=t=in:st=0:d=0.15:alpha=1[lg];"
+                          f"[ecb][lg]overlay=(W-w)/2:H/2-h-40,format=yuv420p[v{n_shots}]")
         durs.append(d)
     trans = edl.get("transition", "cut")
     xd = float(edl.get("transition_dur", 0.3))
@@ -810,10 +822,12 @@ def cmd_render(ws: Workspace, args):
         total = off
     texts = []
     for t in edl.get("text", []):
-        y = {"top": "h*0.14", "center": "(h-th)/2", "bottom": "h*0.72"}[t.get("pos", "bottom")]
+        # Instagram safe band: survives the 4:5 feed and 3:4 grid crops and clears the app UI
+        y = {"top": "h*0.17", "center": "(h-th)/2", "bottom": "h*0.70"}[t.get("pos", "bottom")]
+        box = ":box=1:boxcolor=black@0.45:boxborderw=18" if t.get("box", True) else ""
         texts.append(
             f"drawtext=fontfile={fontfile}:text='{esc(t['text'])}':fontsize={t.get('size', 64)}:"
-            f"fontcolor=white:borderw=3:bordercolor=black@0.6:x=(w-tw)/2:y={y}:"
+            f"fontcolor=white:borderw=3:bordercolor=black@0.6{box}:x=(w-tw)/2:y={y}:"
             f"enable='between(t,{t['t']},{t['t'] + t['dur']})'")
     fade = f"fade=t=in:st=0:d={edl.get('fade_in', 0)}" if edl.get("fade_in") else ""
     post = ",".join(x for x in texts + [fade] if x)
@@ -831,17 +845,19 @@ def cmd_render(ws: Workspace, args):
     out_dir = ws.prod / vid
     out_dir.mkdir(parents=True, exist_ok=True)
     out = out_dir / f"{vid}_{edl.get('version', 'draft1')}.mp4"
-    enc = ["-c:v", "libx264", "-preset", args.preset, "-crf", "18", "-profile:v", "high", "-pix_fmt", "yuv420p"]
+    enc = ["-c:v", "libx264", "-preset", args.preset, "-crf", "18", "-maxrate", "20M", "-bufsize", "40M",
+           "-profile:v", "high", "-pix_fmt", "yuv420p"]
     if args.hw:
         enc = ["-c:v", "h264_videotoolbox", "-b:v", "16M", "-pix_fmt", "yuv420p"]
     cmd = ["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", *inputs,
            "-filter_complex", ";\n".join(chains), "-map", "[vout]", "-map", "[aout]",
-           *enc, "-r", str(FPS), "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart",
+           *enc, "-colorspace", "bt709", "-color_primaries", "bt709", "-color_trc", "bt709", "-r", str(FPS), "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart",
            "-t", f"{total:.3f}", str(out)]
     (out_dir / f"{out.stem}_ffmpeg.txt").write_text(
         " ".join(f"'{c}'" if (" " in c or ";" in c or "[" in c) else c for c in cmd), encoding="utf-8")
     run(cmd)
     ws.logrow("render", time.time() - t0, video=vid, shots=n_shots, seconds_out=round(total, 2),
+              source_reuse_pct=round(reuse_pct, 1),
               re_encoded="final render only")
     print(f"render: {out.relative_to(ws.root)}  {total:.1f}s  {n_shots} shots  {time.time() - t0:.1f}s")
 
@@ -850,6 +866,8 @@ def cmd_render(ws: Workspace, args):
 def cmd_qc(ws: Workspace, args):
     t0 = time.time()
     path = Path(args.video)
+    if not path.exists():
+        path = ws.root / args.video          # allow workspace-relative paths
     if not path.exists() or path.stat().st_size == 0:
         sys.exit(f"qc: video not found or empty: {path}")
     m = probe(path)
@@ -867,7 +885,10 @@ def cmd_qc(ws: Workspace, args):
     same_len_share = float(max((np.abs(body_sh - x) <= 0.1).mean() for x in body_sh)) if len(body_sh) else 0.0
     beat_sync = None
     if args.beats:
-        beats = np.array(load_json(Path(args.beats))["beats"])
+        bp = Path(args.beats) if Path(args.beats).exists() else ws.root / args.beats
+        if not bp.exists():
+            sys.exit(f"qc: beats file not found: {args.beats}")
+        beats = np.array(load_json(bp)["beats"])
         body = [c for c in cut_t if c < m["duration"] - 3.5]
         if body and len(beats):
             beat_sync = float(np.mean([np.min(np.abs(beats - c)) <= 0.07 for c in body]))
@@ -893,6 +914,7 @@ def cmd_qc(ws: Workspace, args):
         ("dimensions", (m["width"], m["height"]) == (exp_w, exp_h), f"{m['width']}x{m['height']} (want {exp_w}x{exp_h})"),
         ("duration_30_40s", 30 <= m["duration"] <= 40, f"{m['duration']:.2f}s"),
         ("fps", 23.9 <= m["fps"] <= 60.1, f"{m['fps']}"),
+        ("bitrate_5-25Mbps", 5e6 <= m["bitrate"] <= 25e6, f"{m['bitrate'] / 1e6:.1f} Mbps (Instagram ~15-20 Mbps)"),
         ("codec", m["codec"] == "h264" and m["pix_fmt"] == "yuv420p", f"{m['codec']}/{m['pix_fmt']}"),
         ("no_black_gaps", not [b for b in blacks if b[0] > 0.2 and b[1] < m["duration"] - 3.5],
          f"{blacks}"),

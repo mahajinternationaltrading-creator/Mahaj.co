@@ -18,6 +18,11 @@ Read in this order, only as needed (token rule: never load all of them by defaul
 - Never publish. Final videos need the owner's explicit approval.
 - Never claim a tool, agent or integration works unless it was run and tested in this session.
 - Brand facts (logo, slogan, contacts) come only from the brand file. Never invent them.
+- MIT_eventss is a trade name of **Mahaj International Trading**; legal mentions use that name
+  and company facts come only from the MAHAJ Company Brain.
+- `MIT_AI_STUDIO/PROJECT_CONTROL/PUBLISHING_SAFETY_RULES.md` is blocking for every delivery
+  (Instagram/TikTok blocks, copyright, minors, safe zones, public-repo privacy).
+- This repository is public: never commit real-event media, people, clients, prices or contacts.
 - Every agent report uses the 5-line format: Status / Work completed / Decisions / Problems / Next action.
 
 ## The team

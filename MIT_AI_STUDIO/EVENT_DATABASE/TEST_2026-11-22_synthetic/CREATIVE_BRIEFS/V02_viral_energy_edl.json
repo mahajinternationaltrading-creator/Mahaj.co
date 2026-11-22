@@ -1,6 +1,6 @@
 {
  "video_id": "V02_viral_energy",
- "version": "draft2",
+ "version": "draft3",
  "transition": "cut",
  "music": {
   "file": "/home/user/Mahaj.co/MIT_AI_STUDIO/EVENT_DATABASE/TEST_2026-11-22_synthetic/CREATIVE_BRIEFS/music/bed_energy_124bpm.m4a",
@@ -262,6 +262,12 @@
      "fix": "Shot durs snapped to whole frames on the cumulative beat grid so cuts stay within 1 frame of a beat"
     }
    ]
+  },
+  {
+   "round": "3 (owner-authorised after QC ESCALATE)",
+   "from": "Studio Manager on owner delegation 22 Nov",
+   "issue": "QC r2: text without box; dim flash on end-card fade; source reuse",
+   "fix": "engine: text box default on, Instagram safe band (17%/70%), end-card fade 0.15 s, larger handle; reuse ACCEPTED for synthetic test only (library 31 s < 2x runtime) - rule added for real events"
   }
  ]
 }
