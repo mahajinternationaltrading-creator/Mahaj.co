@@ -8,3 +8,5 @@
 | 21:23 | G7 | V03 draft1 REJECT round 1 — What: static opening, no cut. Where: 00:00–00:03. Why: weak hook, scroll-away risk. Fix: ≤1.2 s moving opener. Owner: video-editor | quality-controller (auto) |
 | 21:24 | G8 | V03 draft2 rendered (35.7 s) → auto QC PASS | video-editor → QC |
 | 21:27 | G7 | V02 draft1 sent to independent QC agent — see QC_REPORT.md | Studio Manager |
+| 21:35 | G7 | V02 draft1 **REJECT round 1** by independent QC agent despite 11/11 automatic PASS: uniform 1.5 s shots (no build), strict 4-source loop with repeated in-points, beat text readability 0:12–0:13, end card lacks handle/CTA. Owner: video-editor. Not corrected: test goal (correction loop) already proven on V03; fix belongs to real production | quality-controller (agent) |
+| 21:35 | — | Lesson: auto QC measures specs, not craft. Candidate engine addition: shot-length variance + repeated in-point check | Studio Manager |
