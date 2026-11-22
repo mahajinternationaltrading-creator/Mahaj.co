@@ -1,176 +1,263 @@
 {
  "video_id": "V02_viral_energy",
- "version": "draft1",
+ "version": "draft2",
  "transition": "cut",
  "music": {
-  "file": "/tmp/claude-0/-home-user-Mahaj-co/65bee9d7-d49b-5d65-87a4-0280d0255141/scratchpad/music/test_bed.m4a",
+  "file": "/home/user/Mahaj.co/MIT_AI_STUDIO/EVENT_DATABASE/TEST_2026-11-22_synthetic/CREATIVE_BRIEFS/music/bed_energy_124bpm.m4a",
   "start": 0
  },
  "end_card": {
-  "dur": 2.0,
-  "line1": "MIT_eventss",
-  "line2": "[TEST] contact line from brand file"
+  "dur": 2.9034,
+  "logo": "/home/user/Mahaj.co/MIT_AI_STUDIO/PROJECT_CONTROL/brand_assets/MIT_logo_transparent.png",
+  "line1": "",
+  "line2": "@mit_eventss"
  },
  "shots": [
   {
+   "seg": "C0006-S01",
+   "in": 3.6,
+   "dur": 0.9678,
+   "speed": 0.8
+  },
+  {
    "seg": "C0001-S02",
-   "in": 6,
-   "dur": 0.8,
-   "speed": 1.25
+   "in": 6.2,
+   "dur": 0.9678,
+   "speed": 1.0,
+   "crop_x": 0.5
   },
   {
    "seg": "C0006-S01",
-   "in": 0,
-   "dur": 0.8,
-   "speed": 1.0
-  },
-  {
-   "seg": "C0008-S01",
-   "in": 0,
-   "dur": 0.8,
+   "in": 2.6,
+   "dur": 0.9678,
    "speed": 1.0
   },
   {
    "seg": "C0001-S01",
-   "in": 0,
-   "dur": 0.8,
-   "speed": 1.25
+   "in": 2.7,
+   "dur": 0.9678,
+   "speed": 1.0,
+   "crop_x": 0.5
   },
   {
    "seg": "C0001-S02",
-   "in": 7.3,
-   "dur": 1.5,
-   "speed": 1.0
-  },
-  {
-   "seg": "C0006-S01",
-   "in": 1.1,
-   "dur": 1.5,
-   "speed": 1.0
+   "in": 7.5,
+   "dur": 1.4517,
+   "speed": 0.8,
+   "crop_x": 0.5
   },
   {
    "seg": "C0008-S01",
-   "in": 1.1,
-   "dur": 1.5,
-   "speed": 1.25
-  },
-  {
-   "seg": "C0001-S01",
-   "in": 1.3,
-   "dur": 1.5,
-   "speed": 1.0
-  },
-  {
-   "seg": "C0001-S02",
-   "in": 9.1,
-   "dur": 1.5,
-   "speed": 1.0
-  },
-  {
-   "seg": "C0006-S01",
-   "in": 2.9,
-   "dur": 1.5,
-   "speed": 1.25
-  },
-  {
-   "seg": "C0008-S01",
-   "in": 3.27,
-   "dur": 1.5,
+   "in": 0.8,
+   "dur": 0.9678,
    "speed": 1.0
   },
   {
    "seg": "C0001-S01",
    "in": 3.1,
-   "dur": 1.5,
-   "speed": 1.0
+   "dur": 1.4517,
+   "speed": 0.8,
+   "crop_x": 0.5
   },
   {
    "seg": "C0001-S02",
-   "in": 6,
-   "dur": 1.5,
-   "speed": 1.25
+   "in": 6.5,
+   "dur": 0.9678,
+   "speed": 1.0,
+   "crop_x": 0.5
   },
   {
    "seg": "C0006-S01",
-   "in": 5.08,
-   "dur": 1.5,
-   "speed": 1.0
-  },
-  {
-   "seg": "C0008-S01",
-   "in": 5.08,
-   "dur": 1.5,
+   "in": 5.1,
+   "dur": 0.9678,
    "speed": 1.0
   },
   {
    "seg": "C0001-S01",
-   "in": 0,
-   "dur": 1.5,
-   "speed": 1.25
+   "in": 1.0,
+   "dur": 1.4517,
+   "speed": 0.8,
+   "crop_x": 0.5
   },
   {
    "seg": "C0001-S02",
-   "in": 8.18,
-   "dur": 1.5,
+   "in": 8.2,
+   "dur": 0.9678,
+   "speed": 0.8,
+   "crop_x": 0.5
+  },
+  {
+   "seg": "C0001-S01",
+   "in": 2.1,
+   "dur": 1.4517,
+   "speed": 1.0,
+   "crop_x": 0.5
+  },
+  {
+   "seg": "C0001-S02",
+   "in": 7.0,
+   "dur": 1.4517,
+   "speed": 1.25,
+   "crop_x": 0.5
+  },
+  {
+   "seg": "C0008-S01",
+   "in": 5.6,
+   "dur": 0.9678,
    "speed": 1.0
   },
   {
+   "seg": "C0001-S02",
+   "in": 6.4,
+   "dur": 1.4517,
+   "speed": 1.0,
+   "crop_x": 0.5
+  },
+  {
    "seg": "C0006-S01",
-   "in": 6.88,
-   "dur": 1.5,
+   "in": 4.7,
+   "dur": 0.9678,
    "speed": 1.0
   },
   {
    "seg": "C0008-S01",
-   "in": 6.88,
-   "dur": 1.5,
-   "speed": 1.25
-  },
-  {
-   "seg": "C0001-S01",
-   "in": 2.17,
-   "dur": 1.5,
+   "in": 5.5,
+   "dur": 1.4517,
    "speed": 1.0
   },
   {
    "seg": "C0001-S02",
-   "in": 9.98,
-   "dur": 1.5,
-   "speed": 1.0
-  },
-  {
-   "seg": "C0006-S01",
-   "in": 0,
-   "dur": 1.5,
-   "speed": 1.25
+   "in": 9.3,
+   "dur": 0.4839,
+   "speed": 1.0,
+   "crop_x": 0.5
   },
   {
    "seg": "C0008-S01",
-   "in": 0,
-   "dur": 1.5,
+   "in": 1.0,
+   "dur": 0.4839,
+   "speed": 1.0
+  },
+  {
+   "seg": "C0001-S02",
+   "in": 6.9,
+   "dur": 0.4839,
+   "speed": 1.0,
+   "crop_x": 0.5
+  },
+  {
+   "seg": "C0001-S01",
+   "in": 0.8,
+   "dur": 0.4839,
+   "speed": 1.0,
+   "crop_x": 0.5
+  },
+  {
+   "seg": "C0008-S01",
+   "in": 3.6,
+   "dur": 0.4839,
+   "speed": 1.0
+  },
+  {
+   "seg": "C0001-S02",
+   "in": 9.0,
+   "dur": 0.4839,
+   "speed": 1.25,
+   "crop_x": 0.5
+  },
+  {
+   "seg": "C0001-S01",
+   "in": 1.9,
+   "dur": 0.4839,
+   "speed": 1.0,
+   "crop_x": 0.5
+  },
+  {
+   "seg": "C0001-S02",
+   "in": 9.2,
+   "dur": 0.4839,
+   "speed": 1.0,
+   "crop_x": 0.5
+  },
+  {
+   "seg": "C0008-S01",
+   "in": 6.7,
+   "dur": 0.4839,
+   "speed": 1.25
+  },
+  {
+   "seg": "C0001-S01",
+   "in": 4.6,
+   "dur": 0.4839,
+   "speed": 1.0,
+   "crop_x": 0.5
+  },
+  {
+   "seg": "C0006-S01",
+   "in": 4.3,
+   "dur": 0.9678,
    "speed": 1.0
   },
   {
    "seg": "C0001-S01",
-   "in": 3.97,
-   "dur": 1.5,
-   "speed": 1.0
+   "in": 0.3,
+   "dur": 0.9678,
+   "speed": 1.0,
+   "crop_x": 0.5
+  },
+  {
+   "seg": "C0001-S02",
+   "in": 8.9,
+   "dur": 1.4517,
+   "speed": 1.0,
+   "crop_x": 0.5
+  },
+  {
+   "seg": "C0001-S01",
+   "in": 1.4,
+   "dur": 1.9356,
+   "speed": 1.25,
+   "crop_x": 0.5
   }
  ],
  "text": [
   {
-   "t": 0.0,
-   "dur": 2.0,
+   "t": 0,
+   "dur": 1.9356,
    "text": "[TEST] HOOK LINE",
-   "pos": "top",
+   "pos": "bottom",
    "size": 84
   },
   {
-   "t": 12,
-   "dur": 2.5,
+   "t": 12.0975,
+   "dur": 2.4195,
    "text": "[TEST] beat text",
-   "pos": "center",
-   "size": 72
+   "pos": "bottom",
+   "size": 84
+  }
+ ],
+ "corrections": [
+  {
+   "round": 2,
+   "from": "draft1",
+   "items": [
+    {
+     "issue": "Flat 1.5 s grid, no build",
+     "fix": "Cuts derived from 124 BPM beat map; shot lengths 1-4 beats: hook 2 beats, build 2-3, peak 10 x 1-beat shots at beats 41-51 (60-75%), 4-beat breath, then end card; every cut on a beat"
+    },
+    {
+     "issue": "Fixed 4-source loop and repeated in-points",
+     "fix": "Random non-repeating source order (no same segment twice in a row), every (segment, in-point) unique, all within segment end limits"
+    },
+    {
+     "issue": "Text centre-placed, weak legibility, hook on 14% line",
+     "fix": "Both texts pos bottom (72% height), size 84, outside top 14%; engine has no box option so stroke kept; [TEST] placeholders retained"
+    },
+    {
+     "issue": "Weak end card",
+     "fix": "Logo + @mit_eventss (brand-file fact), 6 beats = 2.903 s, music beat-aligned; no invented slogan or contact; line1 empty"
+    }
+   ]
   }
  ]
 }

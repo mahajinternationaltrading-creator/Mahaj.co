@@ -1,7 +1,7 @@
 {
-  "mode": "2fps",
-  "samples": 23,
-  "refined": 3,
+  "mode": "2fps+scdet",
+  "samples": 20,
+  "refined": 0,
   "cuts": 0,
   "segments": [
     {
@@ -10,14 +10,14 @@
       "start": 0.0,
       "end": 10.0,
       "duration": 10.0,
-      "samples": 23,
+      "samples": 20,
       "thumb_t": 0.0,
-      "luma": 21.8,
-      "dark": 0.684,
+      "luma": 20.2,
+      "dark": 0.707,
       "bright": 0.0,
-      "sharp": 7981.7,
-      "sat": 19.4,
-      "motion": 11.26,
+      "sharp": 7448.5,
+      "sat": 17.9,
+      "motion": 10.67,
       "camera": "handheld/active",
       "dhash": 4297377731743992878,
       "sig": [
@@ -27,8 +27,8 @@
       ]
     }
   ],
-  "pipeline": "1.1",
+  "pipeline": "1.2",
   "size": 12714188,
   "mtime": 1795382388.3673046,
-  "seconds": 1.96
+  "seconds": 1.47
 }

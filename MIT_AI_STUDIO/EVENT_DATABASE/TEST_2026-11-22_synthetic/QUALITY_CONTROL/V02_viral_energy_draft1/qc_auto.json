@@ -66,14 +66,19 @@
     {
       "check": "hook_first_2s_active",
       "pass": true,
-      "value": "motion 14.7, cuts 2"
+      "value": "motion 14.7, cuts 3"
     },
     {
       "check": "hook_first_2s_not_dark",
       "pass": true,
       "value": "luma 94"
+    },
+    {
+      "check": "rhythm_not_uniform",
+      "pass": false,
+      "value": "26 cuts, avg shot 1.30s, CV 0.35, 77% of shots the same length (±0.1 s)"
     }
   ],
-  "technical_pass": true,
+  "technical_pass": false,
   "note": "Automatic checks only. Storytelling, rhythm, brand and objective are judged by the quality-controller agent from the review sheets; music/sync must be confirmed by ear."
 }

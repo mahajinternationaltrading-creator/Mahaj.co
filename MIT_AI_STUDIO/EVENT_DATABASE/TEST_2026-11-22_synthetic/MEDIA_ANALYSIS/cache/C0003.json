@@ -1,7 +1,7 @@
 {
   "mode": "keyframes",
-  "samples": 14,
-  "refined": 6,
+  "samples": 29,
+  "refined": 21,
   "cuts": 0,
   "segments": [
     {
@@ -10,16 +10,16 @@
       "start": 0.0,
       "end": 8.0,
       "duration": 8.0,
-      "samples": 14,
-      "thumb_t": 4.0,
-      "luma": 18.8,
-      "dark": 0.568,
+      "samples": 29,
+      "thumb_t": 4.5,
+      "luma": 18.2,
+      "dark": 0.586,
       "bright": 0.0,
-      "sharp": 64.3,
-      "sat": 49.5,
-      "motion": 6.71,
-      "camera": "handheld/active",
-      "dhash": 10093167520844234268,
+      "sharp": 63.7,
+      "sat": 47.3,
+      "motion": 5.69,
+      "camera": "static",
+      "dhash": 870078064928652862,
       "sig": [
         16630552784554270155,
         10093167520844234268,
@@ -27,8 +27,8 @@
       ]
     }
   ],
-  "pipeline": "1.1",
+  "pipeline": "1.2",
   "size": 8158130,
   "mtime": 1795382402.4033053,
-  "seconds": 0.57
+  "seconds": 1.63
 }
