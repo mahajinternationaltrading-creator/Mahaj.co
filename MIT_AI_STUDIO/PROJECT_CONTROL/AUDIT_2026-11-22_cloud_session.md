@@ -1,4 +1,4 @@
-# Project audit & migration report — MIT_eventss AI Studio
+# Project audit & migration report — mit_eventss AI Studio
 22 November 2026 · Studio Manager (Claude Code, cloud session on repository `Mahaj.co`)
 
 ## 0. Summary
@@ -40,9 +40,9 @@ What I built here is the part that was missing as **durable, versioned infrastru
 |---|---|---|
 | Instructions | 00 Index, 01 Master instructions, 02 Production standards, 03 Tools & costs, 04 Presenter library, 05 Instagram playbook, 06 Studio OS, 07 Upgrade brief | Claude Project |
 | Engine | `studio_render.py` v1.6 (captions FR/AR/ZH, logo overlay with colour check, loudness, safe zones, auto QC), `compose_music_bed.py`, `face_match.py`, `footage_pipeline.py`, `bootstrap.sh` | Claude Project + Mac |
-| Brands | Mahaj, Palais Ouazzani, Frankie, MIT Events (#B62125 / #597832, logo, slogan, placement), BDE UIASS | Claude Project |
+| Brands | Mahaj, Palais Ouazzani, Frankie, mit_eventss (#B62125 / #597832, logo, slogan, placement), BDE UIASS | Claude Project |
 | Ledgers | production ledger, 81 lessons learned, registry V001–V010, PH001 | Claude Project |
-| Library | 5 MIT event folders (~220 videos, ~2,700 RAW photos), INVENTORY.xlsx | Mac |
+| Library | 5 mit_eventss event folders (~220 videos, ~2,700 RAW photos), INVENTORY.xlsx | Mac |
 | Earlier test | Event 30-05-25 gala dinner analysed (40 clips, 7.9 GB, ~4 min) | Mac `_STUDIO/EVENTS/` |
 
 ## 3. Duplications, conflicts and inefficiencies
@@ -51,7 +51,7 @@ What I built here is the part that was missing as **durable, versioned infrastru
 |---|---|---|---|
 | 1 | **Two footage pipelines now exist**: `footage_pipeline.py` (Mac, unseen) and `ENGINE/mit_studio.py` (here) | divergent results, double maintenance | Compare both on the gala-dinner event; keep one as canonical in git, archive the other (§7 step 2) |
 | 2 | **Two studio homes**: Claude Project knowledge vs this git repo | rules drift | Git becomes the single source; the Project keeps a pointer + copy of `CLAUDE.md` |
-| 3 | Brand name form: "MIT Events" (brand file) vs "MIT_eventss" (your brief, Instagram handle) | wrong on-screen name | **Your decision**: which form goes on end cards |
+| 3 | Brand name form had several variants in older files | inconsistent name | **Resolved 22 Nov by the owner: `mit_eventss` in every text** (logo artwork unchanged); engine rejects other variants |
 | 4 | Earlier audit mapped folders to `_STUDIO/EVENTS/`; your brief asks for `MIT_AI_STUDIO/` | two trees | Engine takes any workspace path (`-w`); use `MIT_AI_STUDIO/EVENT_DATABASE/` for new events, keep `_STUDIO/EVENTS/` readable |
 | 5 | Earlier: 01 names Seedance as engine, 03 says Doubao is default | conflict | already resolved by the earlier audit (03 §4 D prevails) — unchanged |
 | 6 | Earlier: ad lengths 15/20/25 s vs 30–40 s | conflict | already resolved (30–40 s for the event triptych) — unchanged |
@@ -103,7 +103,7 @@ Footage stays where it is (Mac); workspaces reference it by path; media never en
 | 1 | Build repo structure, agents, OS, engine; test | Studio Manager | **done (this session)** |
 | 2 | Run Claude Code **on the Mac** in a clone of this repo; run `mit_studio.py` on the analysed gala dinner; compare with `footage_pipeline.py`; keep the better, archive the other | you start session, Claude does it | open |
 | 3 | Copy `studio/00–07`, `brands/`, `ledger/`, `studio_render.py`, `compose_music_bed.py`, `face_match.py` into the repo (`MIT_AI_STUDIO/PROJECT_CONTROL/legacy/` and `ENGINE/`), backup first | Claude on Mac | open |
-| 4 | Replace partial `BRAND_MIT_eventss.md` with the real brand file; decide name form (§3 #3) | you + Brand Director | open |
+| 4 | Replace partial `BRAND_mit_eventss.md` with the real brand file; name form resolved (§3 #3) | you + Brand Director | open (slogan/contact line) |
 | 5 | Point the Claude Project's custom instructions at this repo's `CLAUDE.md` | you | open |
 | 6 | First real production: one event, full chain G1–G10 | studio | awaiting your go |
 
@@ -146,7 +146,7 @@ migration plan validates these on the real gala dinner.
 2. **Install on macOS (free, Homebrew):** `brew install ffmpeg` and
    `python3 -m pip install numpy pillow`. No OpenCV needed. On M2 use `render --hw`
    (VideoToolbox) for faster renders.
-3. **Brand decisions:** on-screen name form (MIT Events vs MIT_eventss); official logo file.
+3. **Brand:** resolved — `mit_eventss` in all texts; official logo = Drive transparent PNG.
 4. **Music:** licensed source for final videos (the drafts used a synthetic test bed).
 5. **Consent** for identifiable guests/children/sponsors (gala dinner) before publishing.
 6. **Connectors** Canva/Notion/Slack failed to connect from this cloud environment — only
@@ -168,8 +168,8 @@ migration plan validates these on the real gala dinner.
 | Item | Result |
 |---|---|
 | Run on the Mac / install ffmpeg on macOS | **Not possible from this session**: no computer is connected to it. Owner action remains (see §9 #1–2). |
-| Real footage | Google Drive connector downloads ≤ 10 MB only; one real MIT_eventss reel (Kermesse) tested → found and fixed a major cut-detection gap (1/23 → 22/23 cuts, 0 false). See `REAL_FOOTAGE_VALIDATION_2026-11-22.md`. |
-| Brand | On-screen `MIT_eventss` / `@mit_eventss`; official transparent logo from Drive; colours verified on the logo pixels. **Owner: Mahaj International Trading** recorded everywhere legal text can appear. |
+| Real footage | Google Drive connector downloads ≤ 10 MB only; one real mit_eventss reel (Kermesse) tested → found and fixed a major cut-detection gap (1/23 → 22/23 cuts, 0 false). See `REAL_FOOTAGE_VALIDATION_2026-11-22.md`. |
+| Brand | On-screen `mit_eventss` / `@mit_eventss`; official transparent logo from Drive; colours verified on the logo pixels. **Owner: Mahaj International Trading** recorded everywhere legal text can appear. |
 | Music | Original, licence-free beds with beat maps (`music` command); beat timing verified at +2.9 ms. |
 | Safety | `PUBLISHING_SAFETY_RULES.md`: Instagram/TikTok blocking risks (copyright audio, watermarks, minors, paid partnership, spam signals, safe zones, export specs) and web/public-repo rules — blocking at G9/G10. |
 | Agents in real use | video-editor, brand-director and quality-controller ran as registered agents: the editor found an engine bug and stopped within scope; QC escalated after two rounds exactly as the rules require. |

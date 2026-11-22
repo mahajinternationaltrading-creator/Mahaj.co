@@ -6,9 +6,9 @@ it is not a note passed along with the file. Platform behaviour changes: re-veri
 items marked *(verify quarterly)* each quarter and record the date here.
 
 ## 1. Identity and ownership
-- **MIT_eventss is a trade name of Mahaj International Trading (MIT).** It is the name used
+- **mit_eventss is a trade name of Mahaj International Trading.** It is the name used
   for events; the legal entity is always **Mahaj International Trading**.
-- On screen and in captions: `MIT_eventss` / `@mit_eventss`. Legal mentions (contracts,
+- On screen and in captions: `mit_eventss` / `@mit_eventss`. Legal mentions (contracts,
   invoices, quotes, website legal page, paid-partnership disclosures) name
   **Mahaj International Trading**, with company facts (address, registration numbers, email,
   phone) taken **only** from the current MAHAJ Company Brain — never typed from memory.
@@ -44,7 +44,7 @@ items marked *(verify quarterly)* each quarter and record the date here.
 
 ## 4. Pre-publish checklist (Publishing Manager, per video)
 1. QC `technical_pass` true and QC_REPORT verdict PASS (or owner accepted escalation).
-2. Brand check PASS: `MIT_eventss` spelling, official logo, ownership correct where legal text appears.
+2. `brandcheck` on the caption file passes; brand check PASS: `mit_eventss` spelling, official logo, ownership correct where legal text appears.
 3. Music source recorded (original bed file / licence proof / in-app audio).
 4. Consent recorded for identifiable people, especially children; sponsors cleared.
 5. No other-platform watermark; 1080×1920; text in the safe band.

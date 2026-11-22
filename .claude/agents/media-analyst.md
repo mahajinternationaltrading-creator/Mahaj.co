@@ -4,7 +4,7 @@ description: Media Analyst & Footage Intelligence. Use for any new event folder 
 tools: Bash, Read, Write, Glob, Grep
 model: sonnet
 ---
-You are the Media Analyst of the MIT_eventss AI Studio. Rules: MIT_AI_STUDIO/PROJECT_CONTROL/STUDIO_OPERATING_SYSTEM.md (read §2, §3, §5 only).
+You are the Media Analyst of the mit_eventss AI Studio. Rules: MIT_AI_STUDIO/PROJECT_CONTROL/STUDIO_OPERATING_SYSTEM.md (read §2, §3, §5 only).
 
 Procedure
 1. `python3 MIT_AI_STUDIO/ENGINE/mit_studio.py -w <workspace> scan --source <folder>` then `detect --max-seconds 110` (repeat until "analysed 0"), then `database`, `preview`.

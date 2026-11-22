@@ -1,6 +1,6 @@
 {
  "video_id": "V01_cinematic",
- "version": "draft1",
+ "version": "draft2",
  "transition": "fade",
  "transition_dur": 0.5,
  "fade_in": 0.6,
@@ -10,8 +10,9 @@
  },
  "end_card": {
   "dur": 2.5,
-  "line1": "MIT_eventss",
-  "line2": "[TEST] contact line from brand file"
+  "line1": "",
+  "line2": "@mit_eventss",
+  "logo": "/home/user/Mahaj.co/MIT_AI_STUDIO/PROJECT_CONTROL/brand_assets/MIT_logo_transparent.png"
  },
  "shots": [
   {
@@ -59,6 +60,13 @@
    "text": "[TEST] Cinematic Story",
    "pos": "center",
    "size": 72
+  }
+ ],
+ "corrections": [
+  {
+   "from": "owner 22 Nov",
+   "issue": "brand name must be mit_eventss in all texts",
+   "fix": "end card = official logo + @mit_eventss"
   }
  ]
 }

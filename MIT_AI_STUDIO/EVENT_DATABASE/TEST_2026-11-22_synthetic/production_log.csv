@@ -59,3 +59,7 @@ timestamp,stage,seconds,details
 2026-11-22T21:52:09,render,17.0,"{""video"": ""V02_viral_energy"", ""shots"": 31, ""seconds_out"": 32.9, ""re_encoded"": ""final render only""}"
 2026-11-22T21:52:55,render,16.7,"{""video"": ""V02_viral_energy"", ""shots"": 31, ""seconds_out"": 32.9, ""source_reuse_pct"": 73.0, ""re_encoded"": ""final render only""}"
 2026-11-22T21:53:02,qc-auto,5.9,"{""video"": ""V02_viral_energy_draft3"", ""technical_pass"": true}"
+2026-11-22T21:59:34,render,17.1,"{""video"": ""V01_cinematic"", ""shots"": 5, ""seconds_out"": 34.0, ""source_reuse_pct"": 0.0, ""re_encoded"": ""final render only""}"
+2026-11-22T21:59:40,qc-auto,6.0,"{""video"": ""V01_cinematic_draft2"", ""technical_pass"": true}"
+2026-11-22T21:59:56,render,15.6,"{""video"": ""V03_commercial_portfolio"", ""shots"": 12, ""seconds_out"": 35.7, ""source_reuse_pct"": 13.5, ""re_encoded"": ""final render only""}"
+2026-11-22T22:00:02,qc-auto,6.3,"{""video"": ""V03_commercial_portfolio_draft3"", ""technical_pass"": true}"

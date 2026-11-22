@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""MIT_eventss AI Studio — footage pipeline and draft renderer.
+"""mit_eventss AI Studio — footage pipeline and draft renderer.
 
 One script, one event workspace, originals are NEVER written to.
 
@@ -52,8 +52,8 @@ MAX_REFINE_SECONDS = 60           # per clip
 MIN_SEGMENT = 0.8                 # s
 DUP_HAMMING = 6                   # dHash bits
 
-BRAND = {  # MIT_eventss — keep in sync with PROJECT_CONTROL/BRAND_MIT_eventss.md
-    "name": "MIT_eventss",
+BRAND = {  # mit_eventss — keep in sync with PROJECT_CONTROL/BRAND_mit_eventss.md
+    "name": "mit_eventss",
     "red": "0xB62125",
     "green": "0x597832",
     "dark": "0x111111",
@@ -728,6 +728,33 @@ def cmd_extract(ws: Workspace, args):
           f"cut points snap to the nearest preceding keyframe)")
 
 
+# --------------------------------------------------------------------------- brand text check
+NAME_RE = re.compile(r"@?\bmit[\s_\-.]*e?vent?s*\b", re.I)
+
+
+def brand_text_problems(text: str):
+    """Owner rule 22 Nov 2026: the only name form is `mit_eventss` (handle `@mit_eventss`)."""
+    probs = [f"name variant '{m.group(0)}' -> use 'mit_eventss'" for m in NAME_RE.finditer(text)
+             if m.group(0).lstrip("@") != "mit_eventss"]
+    if re.search(r"@gmail\.", text, re.I):
+        probs.append("gmail address in public/client text")
+    if re.search(r"info@mahaj\.co\b(?!m)", text, re.I):
+        probs.append("'info@mahaj.co' typo")
+    return probs
+
+
+def cmd_brandcheck(ws: Workspace, args):
+    bad = 0
+    for f in args.files:
+        p = Path(f) if Path(f).exists() else ws.root / f
+        for i, line in enumerate(p.read_text(encoding="utf-8").splitlines(), 1):
+            for pr in brand_text_problems(line):
+                print(f"  {p.name}:{i}: {pr}")
+                bad += 1
+    print(f"brandcheck: {bad} problem(s)")
+    sys.exit(1 if bad else 0)
+
+
 # --------------------------------------------------------------------------- G render
 def esc(t: str) -> str:
     return t.replace("\\", "\\\\").replace(":", "\\:").replace("'", "\u2019").replace("%", "\\%")
@@ -744,6 +771,12 @@ def cmd_render(ws: Workspace, args):
     approved_ids = {a["seg_id"] for a in approved}
     src = ws.source()
     W, H, FPS = edl.get("width", 1080), edl.get("height", 1920), edl.get("fps", 30)
+    screen_text = [t["text"] for t in edl.get("text", [])] + \
+        [edl.get("end_card", {}).get(k, "") for k in ("line1", "line2")] if edl.get("end_card") else \
+        [t["text"] for t in edl.get("text", [])]
+    probs = [p for t in screen_text for p in brand_text_problems(t)]
+    if probs:
+        sys.exit("render refused (brand rule): " + "; ".join(probs))
     fontfile = edl.get("fontfile") or drawtext_font()
     inputs, chains, durs, inputs_meta = [], [], [], []
     for n, shot in enumerate(edl["shots"]):
@@ -1088,6 +1121,8 @@ def main():
     s.add_argument("--bpm", type=float); s.add_argument("--dur", type=float, default=40)
     s.add_argument("--seed", type=int, default=1)
     sub.add_parser("verify")
+    s = sub.add_parser("brandcheck", help="check name form / contacts in captions, EDLs, docs")
+    s.add_argument("files", nargs="+")
     sub.add_parser("status")
     a = ap.parse_args()
     for tool in ("ffmpeg", "ffprobe"):

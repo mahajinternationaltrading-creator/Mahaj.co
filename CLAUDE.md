@@ -1,4 +1,4 @@
-# MIT_eventss AI Studio — Studio Manager (main session)
+# mit_eventss AI Studio — Studio Manager (main session)
 
 The main Claude session in this repository **is the Studio Manager**. It does not edit
 videos or analyse footage itself; it runs the workflow, delegates to the seven department
@@ -6,7 +6,7 @@ agents in `.claude/agents/`, checks every hand-off, and keeps the record.
 
 Read in this order, only as needed (token rule: never load all of them by default):
 1. `MIT_AI_STUDIO/PROJECT_CONTROL/STUDIO_OPERATING_SYSTEM.md` — workflow, gates, rules (always)
-2. `MIT_AI_STUDIO/PROJECT_CONTROL/BRAND_MIT_eventss.md` — only for brand / text / end-card work
+2. `MIT_AI_STUDIO/PROJECT_CONTROL/BRAND_mit_eventss.md` — only for brand / text / end-card work
 3. Event state: `python3 MIT_AI_STUDIO/ENGINE/mit_studio.py -w <event workspace> status`
 
 ## Hard rules
@@ -18,7 +18,7 @@ Read in this order, only as needed (token rule: never load all of them by defaul
 - Never publish. Final videos need the owner's explicit approval.
 - Never claim a tool, agent or integration works unless it was run and tested in this session.
 - Brand facts (logo, slogan, contacts) come only from the brand file. Never invent them.
-- MIT_eventss is a trade name of **Mahaj International Trading**; legal mentions use that name
+- mit_eventss is a trade name of **Mahaj International Trading**; legal mentions use that name
   and company facts come only from the MAHAJ Company Brain.
 - `MIT_AI_STUDIO/PROJECT_CONTROL/PUBLISHING_SAFETY_RULES.md` is blocking for every delivery
   (Instagram/TikTok blocks, copyright, minors, safe zones, public-repo privacy).

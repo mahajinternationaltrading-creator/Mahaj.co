@@ -10,11 +10,11 @@
 | 21:27 | G7 | V02 draft1 sent to independent QC agent — see QC_REPORT.md | Studio Manager |
 | 21:35 | G7 | V02 draft1 **REJECT round 1** by independent QC agent despite 11/11 automatic PASS: uniform 1.5 s shots (no build), strict 4-source loop with repeated in-points, beat text readability 0:12–0:13, end card lacks handle/CTA. Owner: video-editor. Not corrected: test goal (correction loop) already proven on V03; fix belongs to real production | quality-controller (agent) |
 | 21:35 | — | Lesson: auto QC measures specs, not craft. Candidate engine addition: shot-length variance + repeated in-point check | Studio Manager |
-| 21:50 | — | Owner delegated open decisions ("do it on your own"). Decided: on-screen name MIT_eventss / @mit_eventss; logo = Drive transparent PNG; licence-free generated beds for drafts. Not decidable by the studio: consent, Mac access | Studio Manager |
+| 21:50 | — | Owner delegated open decisions ("do it on your own"). Decided: on-screen name mit_eventss / @mit_eventss; logo = Drive transparent PNG; licence-free generated beds for drafts. Not decidable by the studio: consent, Mac access | Studio Manager |
 | 21:55 | — | Engine v1.2 after real-footage test (22/23 cuts); QC: scdet hook + rhythm uniformity + beat sync; `music` command; end-card logo | Studio Manager |
 | 22:00 | G8 | V02 correction round 2 sent to video-editor agent (beat-locked cuts, varied rhythm, logo end card) | Studio Manager |
 | 22:10 | G6 | V02 draft2 brand check PASS (advisory: end card high, handle small) | brand-director (agent) |
 | 22:15 | G7 | V02 draft2 **ESCALATE** after round 2: reuse of source frames, text without box | quality-controller (agent) |
 | 22:20 | owner | Owner instruction "correct all the errors". Decision: text box added (engine); reuse ACCEPTED for this synthetic test only (library 31 s < 2x runtime); rule added: Creative Director approves >= 2x runtime; render warns on reuse | Studio Manager for owner |
 | 22:25 | G8 | V02 draft3 rendered (engine fixes only, same edit): 13/13 technical PASS, 100 % cuts on beat, reuse warning 73 % (accepted, test only) | Studio Manager |
-| 22:30 | — | Owner: MIT_eventss is a trade name of Mahaj International Trading → brand file, CLAUDE.md, agents, PUBLISHING_SAFETY_RULES.md | Studio Manager |
+| 22:30 | — | Owner: mit_eventss is a trade name of Mahaj International Trading → brand file, CLAUDE.md, agents, PUBLISHING_SAFETY_RULES.md | Studio Manager |

@@ -1,6 +1,6 @@
-# MIT_eventss AI Studio — Operating System v1.0 (2026-11-22)
+# mit_eventss AI Studio — Operating System v1.0 (2026-11-22)
 
-One studio, seven departments, one Studio Manager. MIT_eventss is the events trade name of
+One studio, seven departments, one Studio Manager. mit_eventss is the events trade name of
 **Mahaj International Trading**. Blocking safety rules: `PUBLISHING_SAFETY_RULES.md`. The goal is better videos with less
 processing, not more AI activity.
 
@@ -23,7 +23,7 @@ Footage is **referenced**, never copied. On a Mac the workspace may live next to
 footage (e.g. `~/Desktop/Claude Studio/_STUDIO/EVENTS/`); pass it with `-w`.
 Shared knowledge (this file, brand files, agents, engine) is kept separate from events.
 
-Brand codes in use: `MITEV` (MIT_eventss), `MIT`, `PO` (Palais Ouazzani), `ABU`
+Brand codes in use: `MITEV` (mit_eventss), `MIT`, `PO` (Palais Ouazzani), `ABU`
 (Abulcasis / BDE UIASS), `FRK` (Frankie). New client → new code, same structure.
 
 ## 2. Engine (`MIT_AI_STUDIO/ENGINE/mit_studio.py`)
@@ -48,7 +48,7 @@ Long events: `detect --max-seconds 110` and repeat; the cache makes every run re
 **Detection logic (v1.2):** frame-accurate cuts from ffmpeg `scdet` in the same decode pass
 when frames are sampled; in keyframe mode, cut = colour-histogram jump **and** structural
 change (so stage-light colour changes are not cuts), refined with `scdet` around changes.
-Validated on a real MIT_eventss reel: 22/23 cuts, 0 false (REAL_FOOTAGE_VALIDATION). Blur = Laplacian variance below 30 % of the
+Validated on a real mit_eventss reel: 22/23 cuts, 0 false (REAL_FOOTAGE_VALIDATION). Blur = Laplacian variance below 30 % of the
 event median. Dark / overexposed / black by luma and clipped-pixel share. Duplicates =
 perceptual hash on the representative frame or at 25/50/75 % of the segment; the
 highest-resolution file is kept as master. Camera move from phase correlation.

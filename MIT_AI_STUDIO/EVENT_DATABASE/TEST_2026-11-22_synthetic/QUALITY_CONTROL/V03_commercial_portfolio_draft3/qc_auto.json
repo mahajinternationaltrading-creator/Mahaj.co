@@ -1,0 +1,89 @@
+{
+  "video": "V03_commercial_portfolio_draft3.mp4",
+  "probe": {
+    "codec": "h264",
+    "width": 1080,
+    "height": 1920,
+    "coded_w": 1080,
+    "coded_h": 1920,
+    "rotation": 0,
+    "fps": 30.0,
+    "duration": 35.7,
+    "orientation": "vertical",
+    "bitrate": 8362961,
+    "pix_fmt": "yuv420p",
+    "color_transfer": "bt709",
+    "audio": true,
+    "audio_codec": "aac",
+    "creation_time": null
+  },
+  "checks": [
+    {
+      "check": "dimensions",
+      "pass": true,
+      "value": "1080x1920 (want 1080x1920)"
+    },
+    {
+      "check": "duration_30_40s",
+      "pass": true,
+      "value": "35.70s"
+    },
+    {
+      "check": "fps",
+      "pass": true,
+      "value": "30.0"
+    },
+    {
+      "check": "bitrate_5-25Mbps",
+      "pass": true,
+      "value": "8.4 Mbps (Instagram ~15-20 Mbps)"
+    },
+    {
+      "check": "codec",
+      "pass": true,
+      "value": "h264/yuv420p"
+    },
+    {
+      "check": "no_black_gaps",
+      "pass": true,
+      "value": "[]"
+    },
+    {
+      "check": "no_frozen_picture",
+      "pass": true,
+      "value": "[]"
+    },
+    {
+      "check": "audio_present",
+      "pass": true,
+      "value": "ok"
+    },
+    {
+      "check": "loudness_-16_to_-12_LUFS",
+      "pass": true,
+      "value": "-14.0"
+    },
+    {
+      "check": "true_peak_<=-1dB",
+      "pass": true,
+      "value": "-8.7"
+    },
+    {
+      "check": "hook_first_2s_active",
+      "pass": true,
+      "value": "motion 7.9, cuts 1"
+    },
+    {
+      "check": "hook_first_2s_not_dark",
+      "pass": true,
+      "value": "luma 121"
+    },
+    {
+      "check": "rhythm_not_uniform (info only)",
+      "pass": true,
+      "value": "13 cuts, avg shot 2.55s, CV 0.33, 69% of shots the same length (±0.1 s)"
+    }
+  ],
+  "technical_pass": true,
+  "note": "Automatic checks only. Storytelling, rhythm, brand and objective are judged by the quality-controller agent from the review sheets; music/sync must be confirmed by ear."
+}

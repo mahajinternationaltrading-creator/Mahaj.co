@@ -1,7 +1,7 @@
 # Real-footage validation — 22 Nov 2026
 
 Source: the owner's published reel "Kermesse.mov" (Google Drive, 34.0 s, 720×1280, H.264/AAC,
-~23 shots of an outdoor children's kermesse produced by MIT_eventss). Downloaded read-only to
+~23 shots of an outdoor children's kermesse produced by mit_eventss). Downloaded read-only to
 the session scratchpad; the workspace is **not committed** (identifiable children, public repo).
 It is the only Drive video under the Drive connector's 10 MB download limit; the raw event
 folders (30–200 MB files) and the Mac library could not be reached from this session.
@@ -21,14 +21,14 @@ synthetic test could not reveal this. Fix: ffmpeg `scdet` runs inside the same d
 (frame-accurate, no extra decode); stage-light protection for keyframe mode is unchanged and
 the synthetic suite still passes (hue-drift clip is still one segment).
 
-## 2. QC benchmark on a published MIT_eventss reel
+## 2. QC benchmark on a published mit_eventss reel
 
 | Check | Result |
 |---|---|
 | Dimensions | **720×1280** — below the 1080×1920 delivery standard (export setting to fix in CapCut) |
 | Duration, fps, codec, loudness (−14.1 LUFS), true peak (−2.5 dB) | pass |
 | Hook | 1 cut within 2 s (1.43 s), high motion — pass |
-| Branding | MIT logo bug bottom-right on every shot (brand file now allows this for V03 only) |
+| Branding | mit_eventss logo bug bottom-right on every shot (brand file now allows this for V03 only) |
 | Consent | identifiable children throughout → written consent required before any reuse |
 
 QC hook counting was also moved to `scdet` after the benchmark showed 0 cuts where there was 1.

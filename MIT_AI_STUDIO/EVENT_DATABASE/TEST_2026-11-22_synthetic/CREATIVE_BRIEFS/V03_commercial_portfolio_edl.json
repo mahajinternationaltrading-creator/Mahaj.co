@@ -1,6 +1,6 @@
 {
  "video_id": "V03_commercial_portfolio",
- "version": "draft2",
+ "version": "draft3",
  "transition": "cut",
  "music": {
   "file": "/tmp/claude-0/-home-user-Mahaj-co/65bee9d7-d49b-5d65-87a4-0280d0255141/scratchpad/music/test_bed.m4a",
@@ -8,8 +8,9 @@
  },
  "end_card": {
   "dur": 3.0,
-  "line1": "MIT_eventss",
-  "line2": "[TEST] contact line from brand file"
+  "line1": "",
+  "line2": "@mit_eventss",
+  "logo": "/home/user/Mahaj.co/MIT_AI_STUDIO/PROJECT_CONTROL/brand_assets/MIT_logo_transparent.png"
  },
  "shots": [
   {
@@ -107,6 +108,11 @@
    "from": "quality-controller",
    "issue": "hook_first_2s_active FAIL: static 3s opening shot, 0 cuts, motion 1.2",
    "fix": "insert 1.2s moving shot first; shorten shot 2 to 2.4s"
+  },
+  {
+   "from": "owner 22 Nov",
+   "issue": "brand name must be mit_eventss in all texts",
+   "fix": "end card = official logo + @mit_eventss"
   }
  ]
 }
