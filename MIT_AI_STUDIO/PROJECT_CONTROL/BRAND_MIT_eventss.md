@@ -1,29 +1,32 @@
-# Brand file — MIT_eventss (working copy, needs owner reconciliation)
+# Brand file — MIT_eventss (v1.1, 2026-11-22)
 
-Status: **PARTIAL**. The authoritative MIT Events brand file (logo, slogan, placement
-standard) lives in the Claude Project `brands/` folder, which this repository cannot read.
-Until it is copied here, only the facts below may be used. Anything else → leave a
-`[BRAND: ...]` placeholder and raise it with the Studio Manager.
+Status: **WORKING** — on-screen name and logo decided by the Studio Manager under the
+owner's delegation of 22 Nov 2026 ("do it on your own"). The owner can overturn any line.
+Slogan and contact line are still missing (they live in the Claude Project `brands/`
+folder, not readable from here) → never invent them; leave them out.
 
-| Item | Value | Source |
+| Item | Value | Source / verification |
 |---|---|---|
-| Written name in videos | `MIT_eventss` | owner's upgrade brief 2026-11-22 |
-| Social handle | `@mit_eventss` | Drive: "E-catalog @mit_eventss.pdf" |
-| Name used in previous studio files | "MIT Events" | previous audit 2026-11-22 — **owner to confirm which form goes on screen** |
-| Primary red | `#B62125` | previous audit (brands/MIT Events) |
-| Primary green | `#597832` | previous audit (brands/MIT Events) |
-| Dark background (end card) | `#111111` | studio default, not a brand colour |
-| Logo | Drive: "logo mit event & sourcing .PNG" (Personal mit folder); prior memory: use the version **without background** | owner to confirm the official file |
-| Slogan / contact line | exists in brands/MIT Events — **not available here** | do not invent |
+| Name written on screen and in captions | **MIT_eventss** | owner's upgrade brief ("Correct MIT_eventss spelling") |
+| Social handle | **@mit_eventss** | Drive "E-catalog @mit_eventss.pdf" |
+| Logo | Drive file "logo mit event & sourcing .PNG" (id `1WmfxqQmetOdwLAU80Adfa55VFipy66t6`): red block letters **MIT** with a **green i**, wordmark "EVENT & SOURCING"; 1890×1417 RGBA, transparent background | downloaded and inspected 22 Nov; matches the owner's preference "logo without background" |
+| Local copy (not in git — repo is public) | `PROJECT_CONTROL/brand_assets/MIT_logo_transparent.png` | re-download from Drive on a new machine |
+| Primary red | `#B62125` (logo measures ≈ #B02020) | brand file + logo pixels |
+| Primary green | `#597832` (logo measures ≈ #587830) | brand file + logo pixels |
+| End-card background | `#111111` | studio default |
+| Slogan / contact line | **not available** | do not invent |
+| Older name form "MIT Events" | superseded on screen by MIT_eventss; the logo's own wordmark stays as designed | decision 22 Nov |
 
 ## Rules
-- Spell the name exactly as above, every time; never "MIT Event", "MIT-Events", "Mit eventss".
-- Logo: official file only, never redrawn, recoloured, stretched or placed on busy footage.
-  Default placement: end card; optional small corner bug only if the brief asks.
-- Colours red + green for accents (bars, underlines, lower-thirds), not full-screen fills
-  over footage.
-- Branding must not degrade the footage: no watermark across the frame, no logo in the first
-  2 s of V02 (hook must be pure footage).
+- Text: always `MIT_eventss` / `@mit_eventss`. Never "MIT Event", "MIT-Events", "Mit eventss".
+- Logo: official PNG only — never redrawn, recoloured, stretched; not on busy footage.
+  Placement: end card (centred, ~45 % of frame width). A corner bug only if the brief asks;
+  the published Kermesse reel uses a bottom-right bug — allowed for V03, not in V02's
+  first 2 s.
+- Red + green for accents (bars, underlines, lower-thirds), not full-screen fills over footage.
 - Client events: the client's identity leads; MIT_eventss signs as producer on the end card.
-- Sponsor logos visible in footage: keep only if the client agreement allows it.
+- Sponsor logos in footage: only if the client agreement allows it.
 - One typeface family across the three videos of an event.
+- **Children:** footage of identifiable children (e.g. kermesse, school, hospital events) is
+  used only with written consent from the organiser/parents; the Publishing Manager blocks
+  the pack otherwise.

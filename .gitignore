@@ -11,3 +11,10 @@ MIT_AI_STUDIO/EVENT_DATABASE/*/APPROVED_FOOTAGE/extracts/
 __pycache__/
 .DS_Store
 *.tmp
+
+# PUBLIC REPOSITORY: real events (people, children, clients) never go into git.
+# Only synthetic TEST_* workspaces may be committed. Previous audit stays local only.
+MIT_AI_STUDIO/EVENT_DATABASE/*
+!MIT_AI_STUDIO/EVENT_DATABASE/TEST_*/
+MIT_AI_STUDIO/ARCHIVE/*.docx
+MIT_AI_STUDIO/PROJECT_CONTROL/brand_assets/

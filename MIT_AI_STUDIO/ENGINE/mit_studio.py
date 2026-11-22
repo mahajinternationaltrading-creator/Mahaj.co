@@ -38,13 +38,15 @@ from pathlib import Path
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
-PIPELINE_VERSION = "1.1"
+PIPELINE_VERSION = "1.2"
 VIDEO_EXT = {".mp4", ".mov", ".m4v", ".mkv", ".avi", ".mts", ".m2ts", ".3gp", ".webm"}
 ANALYSIS_LONG_SIDE = 320          # analysis frame size (long side, px)
 KEYFRAME_MAX_GAP = 1.5            # s; sparser keyframes -> fall back to 1 fps decode
 REFINE_DIFF = 0.25                # histogram diff that triggers adaptive refinement
 CUT_DIFF = 0.45                   # histogram diff that marks a scene cut ...
 CUT_MAX_CORR = 0.55               # ... only if structure also changed (luma correlation below)
+REFINE_CORR = 0.75                # ... or structural change below this
+SCDET_THRESHOLD = 10              # ffmpeg scdet score (0-100) for a frame-accurate cut
 REFINE_FPS = 4
 MAX_REFINE_SECONDS = 60           # per clip
 MIN_SEGMENT = 0.8                 # s
@@ -241,8 +243,9 @@ def analysis_size(meta):
     return max(2, int(round(w * s / 2)) * 2), max(2, int(round(h * s / 2)) * 2)
 
 
-def decode_frames(path: Path, size, mode: str, start=None, dur=None, fps=1.0):
-    """Return (times[], frames[N,H,W,3] uint8). mode: key | fps"""
+def decode_frames(path: Path, size, mode: str, start=None, dur=None, fps=1.0, scd=False):
+    """Return (times[], frames[N,H,W,3] uint8, scene_cut_times[]). mode: key | fps.
+    scd=True runs ffmpeg scdet on every decoded frame (frame-accurate cuts, no extra decode)."""
     W, H = size
     cmd = ["ffmpeg", "-hide_banner", "-nostdin", "-loglevel", "info"]
     if mode == "key":
@@ -251,9 +254,12 @@ def decode_frames(path: Path, size, mode: str, start=None, dur=None, fps=1.0):
         cmd += ["-ss", f"{start:.3f}"]
     if dur is not None:
         cmd += ["-t", f"{dur:.3f}"]
-    vf = f"scale={W}:{H}:flags=area,format=rgb24,showinfo"
+    vf = f"scale={W}:{H}:flags=area,"
+    if scd and mode == "fps":
+        vf += f"scdet=threshold={SCDET_THRESHOLD}:sc_pass=0,"
     if mode == "fps":
-        vf = f"fps={fps}," + vf
+        vf += f"fps={fps},"
+    vf += "format=rgb24,showinfo"
     cmd += ["-i", str(path), "-an", "-sn", "-vf", vf, "-fps_mode", "passthrough",
             "-f", "rawvideo", "-"]
     p = run(cmd, check=False)
@@ -261,11 +267,12 @@ def decode_frames(path: Path, size, mode: str, start=None, dur=None, fps=1.0):
     n = len(raw) // (W * H * 3)
     times = [float(x) for x in re.findall(rb"pts_time:\s*([-\d.]+)", p.stderr)]
     n = min(n, len(times))
-    if n == 0:
-        return [], np.zeros((0, H, W, 3), np.uint8)
-    frames = np.frombuffer(raw[: n * W * H * 3], np.uint8).reshape(n, H, W, 3)
     off = start or 0.0
-    return [t + off for t in times[:n]], frames
+    cuts = [float(x) + off for x in re.findall(rb"lavfi\.scd\.time:\s*([-\d.]+)", p.stderr)]
+    if n == 0:
+        return [], np.zeros((0, H, W, 3), np.uint8), cuts
+    frames = np.frombuffer(raw[: n * W * H * 3], np.uint8).reshape(n, H, W, 3)
+    return [t + off for t in times[:n]], frames, cuts
 
 
 def frame_metrics(fr: np.ndarray):
@@ -317,13 +324,14 @@ def analyse_clip(src: Path, meta: dict, thumbs: Path):
     path = src / meta["relpath"]
     size = analysis_size(meta)
     dur = meta.get("duration") or 0
-    times, frames = decode_frames(path, size, "key")
+    times, frames, _ = decode_frames(path, size, "key")
     mode = "keyframes"
+    scd_cuts = []
     gaps = np.diff(times) if len(times) > 1 else np.array([dur])
     if len(times) < 3 or float(np.mean(gaps)) > KEYFRAME_MAX_GAP:
         fps = 1.0 if dur > 20 else 2.0
-        times, frames = decode_frames(path, size, "fps", fps=fps)
-        mode = f"{fps:g}fps"
+        times, frames, scd_cuts = decode_frames(path, size, "fps", fps=fps, scd=True)
+        mode = f"{fps:g}fps+scdet"
     if len(times) == 0:
         return {"error": "no frames decoded", "segments": []}
     samples = [dict(t=t, **frame_metrics(f)) for t, f in zip(times, frames)]
@@ -333,11 +341,14 @@ def analyse_clip(src: Path, meta: dict, thumbs: Path):
     refine_budget = MAX_REFINE_SECONDS
     extra = []
     for i in range(1, len(samples)):
-        d = 0.5 * float(np.abs(samples[i]["_hist"] - samples[i - 1]["_hist"]).sum())
+        d, corr, _ = is_cut(samples[i - 1], samples[i])
         gap = samples[i]["t"] - samples[i - 1]["t"]
-        if d > REFINE_DIFF and gap > 1.0 / REFINE_FPS * 1.5 and refine_budget > 0:
+        if mode == "keyframes" and (d > REFINE_DIFF or corr < REFINE_CORR) \
+                and gap > 1.0 / REFINE_FPS * 1.5 and refine_budget > 0:
             span = min(gap, refine_budget)
-            et, ef = decode_frames(path, size, "fps", start=samples[i - 1]["t"], dur=span, fps=REFINE_FPS)
+            et, ef, wc = decode_frames(path, size, "fps", start=samples[i - 1]["t"], dur=span,
+                                       fps=REFINE_FPS, scd=True)
+            scd_cuts += wc
             refine_budget -= span
             for t, f in zip(et, ef):
                 if samples[i - 1]["t"] + 0.05 < t < samples[i]["t"] - 0.05:
@@ -360,10 +371,15 @@ def analyse_clip(src: Path, meta: dict, thumbs: Path):
         s["diff"], s["corr"], cut = is_cut(p, s)
         s["motion"] = float(np.abs(s["_small"] - p["_small"]).mean()) / min(1.0, gap) ** 0.5
         s["dx"], s["dy"] = phase_shift(s["_small"], p["_small"])
-        if cut:
+        if cut and mode == "keyframes":
             cuts.append(s["t"])
 
-    # segments
+    # segments: frame-accurate scdet cuts + keyframe-level cuts, merged within 0.3 s
+    allc = []
+    for c in sorted(cuts + scd_cuts):
+        if 0.2 < c < dur - 0.2 and (not allc or c - allc[-1] > 0.3):
+            allc.append(c)
+    cuts = allc
     bounds = [0.0] + [c for c in cuts] + [max(dur, samples[-1]["t"] + 0.1)]
     merged = [bounds[0]]
     for b in bounds[1:-1]:
@@ -729,7 +745,7 @@ def cmd_render(ws: Workspace, args):
     src = ws.source()
     W, H, FPS = edl.get("width", 1080), edl.get("height", 1920), edl.get("fps", 30)
     fontfile = edl.get("fontfile") or drawtext_font()
-    inputs, chains, durs = [], [], []
+    inputs, chains, durs, inputs_meta = [], [], [], []
     for n, shot in enumerate(edl["shots"]):
         sid = shot["seg"]
         if sid not in approved_ids:
@@ -742,6 +758,7 @@ def cmd_render(ws: Workspace, args):
         if a + src_d > s["end"] + 0.05:
             sys.exit(f"shot {n + 1}: {sid} needs {src_d:.2f}s from {a} but segment ends at {s['end']}")
         inputs += ["-ss", f"{a:.3f}", "-t", f"{src_d + 0.1:.3f}", "-i", str(src / s["meta"]["relpath"])]
+        inputs_meta.append(sid)
         cx = float(shot.get("crop_x", 0.5))
         g = shot.get("grade", {})
         eq = f"eq=brightness={g.get('brightness', 0)}:contrast={g.get('contrast', 1)}:" \
@@ -762,8 +779,18 @@ def cmd_render(ws: Workspace, args):
             f"drawbox=x=(iw-520)/2:y=ih/2+40:w=260:h=10:color={BRAND['red']}:t=fill,"
             f"drawbox=x=iw/2:y=ih/2+40:w=260:h=10:color={BRAND['green']}:t=fill,"
             f"drawtext=fontfile={fontfile}:text='{l1}':fontsize=96:fontcolor=white:x=(w-tw)/2:y=h/2-110,"
+            if l1 else ""
             f"drawtext=fontfile={fontfile}:text='{l2}':fontsize=44:fontcolor=white@0.85:x=(w-tw)/2:y=h/2+90,"
-            f"fade=t=in:st=0:d=0.4,setsar=1,format=yuv420p[v{n_shots}]")
+            f"fade=t=in:st=0:d=0.4,setsar=1,format=yuv420p" + ("[ecb]" if ec.get("logo") else f"[v{n_shots}]"))
+        if ec.get("logo"):  # official transparent PNG, centred above the text
+            logo = Path(ec["logo"]).expanduser()
+            if not logo.exists():
+                logo = ws.root / ec["logo"]
+            li = len(inputs_meta)
+            inputs += ["-loop", "1", "-t", f"{d:.3f}", "-i", str(logo)]
+            inputs_meta.append("logo")
+            chains.append(f"[{li}:v]scale={int(W * 0.45)}:-1,format=rgba,fade=t=in:st=0:d=0.4:alpha=1[lg];"
+                          f"[ecb][lg]overlay=(W-w)/2:H*0.18,format=yuv420p[v{n_shots}]")
         durs.append(d)
     trans = edl.get("transition", "cut")
     xd = float(edl.get("transition_dur", 0.3))
@@ -789,7 +816,7 @@ def cmd_render(ws: Workspace, args):
     post = ",".join(x for x in texts + [fade] if x)
     chains.append(f"[vc]{post or 'null'}[vout]")
     mus = edl.get("music")
-    ai = len(edl["shots"])
+    ai = len(inputs_meta)
     if mus:
         inputs += ["-ss", str(mus.get("start", 0)), "-i", str(Path(mus["file"]).expanduser())]
         chains.append(f"[{ai}:a]atrim=duration={total:.3f},asetpts=PTS-STARTPTS,"
@@ -822,9 +849,21 @@ def cmd_qc(ws: Workspace, args):
     path = Path(args.video)
     m = probe(path)
     p = run(["ffmpeg", "-hide_banner", "-nostats", "-i", str(path), "-vf",
+             f"scale=270:-2,scdet=threshold={SCDET_THRESHOLD}:sc_pass=0,"
              "blackdetect=d=0.3:pic_th=0.97,freezedetect=n=0.003:d=1.5", "-af", "ebur128=peak=true",
              "-f", "null", "-"], check=False)
     err = p.stderr.decode(errors="replace")
+    cut_t = [float(x) for x in re.findall(r"lavfi\.scd\.time:\s*([\d.]+)", err)]
+    shots = np.diff([0.0] + cut_t + [m["duration"]]) if m["duration"] else np.array([])
+    shot_cv = float(shots.std() / shots.mean()) if len(shots) > 1 else 0.0
+    body_sh = shots[:-1] if len(shots) > 2 else shots                # end card excluded
+    same_len_share = float(max((np.abs(body_sh - x) <= 0.1).mean() for x in body_sh)) if len(body_sh) else 0.0
+    beat_sync = None
+    if args.beats:
+        beats = np.array(load_json(Path(args.beats))["beats"])
+        body = [c for c in cut_t if c < m["duration"] - 3.5]
+        if body and len(beats):
+            beat_sync = float(np.mean([np.min(np.abs(beats - c)) <= 0.07 for c in body]))
     blacks = [(float(a), float(b)) for a, b in re.findall(r"black_start:([\d.]+) black_end:([\d.]+)", err)]
     freezes = [float(x) for x in re.findall(r"freeze_duration: ([\d.]+)", err)]
     li = re.findall(r"I:\s+(-?[\d.]+) LUFS", err)
@@ -833,11 +872,11 @@ def cmd_qc(ws: Workspace, args):
     peak = float(tp[-1]) if tp and tp[-1] not in ("-inf", "inf") else None
     # first 2 seconds: activity
     size = analysis_size(m)
-    t2, f2 = decode_frames(path, size, "fps", start=0, dur=2.0, fps=8)
+    t2, f2, hook_scd = decode_frames(path, size, "fps", start=0, dur=2.0, fps=8, scd=True)
     met = [frame_metrics(f) for f in f2]
     hook_motion = float(np.mean([np.abs(met[i]["_small"] - met[i - 1]["_small"]).mean()
                                  for i in range(1, len(met))])) if len(met) > 1 else 0.0
-    hook_cuts = sum(1 for i in range(1, len(met)) if is_cut(met[i - 1], met[i])[2])
+    hook_cuts = len([c for c in hook_scd if 0.05 < c < 2.0])
     hook_luma = float(np.mean([x["luma"] for x in met])) if met else 0
     exp_w, exp_h = args.width, args.height
     silent = lufs is None or lufs < -60
@@ -854,7 +893,12 @@ def cmd_qc(ws: Workspace, args):
         ("true_peak_<=-1dB", peak is not None and peak <= -1.0, f"{peak}"),
         ("hook_first_2s_active", hook_motion > 3 or hook_cuts >= 1, f"motion {hook_motion:.1f}, cuts {hook_cuts}"),
         ("hook_first_2s_not_dark", hook_luma > 35, f"luma {hook_luma:.0f}"),
+        ("rhythm_not_uniform", len(cut_t) < 8 or same_len_share < 0.6,
+         f"{len(cut_t)} cuts, avg shot {shots.mean() if len(shots) else 0:.2f}s, CV {shot_cv:.2f}, "
+         f"{same_len_share * 100:.0f}% of shots the same length (±0.1 s)"),
     ]
+    if beat_sync is not None:
+        checks.append(("cuts_on_beat_>=70%", beat_sync >= 0.7, f"{beat_sync * 100:.0f}% of cuts within 70 ms of a beat"))
     vid = path.stem
     qdir = ws.qc / vid
     qdir.mkdir(parents=True, exist_ok=True)
@@ -879,6 +923,71 @@ def cmd_qc(ws: Workspace, args):
     for c in report["checks"]:
         print(f"  {'PASS' if c['pass'] else 'FAIL'}  {c['check']:28s} {c['value']}")
     print(f"qc: technical_pass={report['technical_pass']} -> {qdir.relative_to(ws.root)}/")
+
+
+# --------------------------------------------------------------------------- music bed
+def cmd_music(ws: Workspace, args):
+    """Original, procedurally generated bed (no third-party samples -> no licence needed).
+    Placeholder quality: for drafts, timing and beat-sync; replace with a licensed track
+    for publication if the owner prefers."""
+    t0 = time.time()
+    sr = 48000
+    bpm = args.bpm or {"cinematic": 76, "energy": 124, "corporate": 104}[args.style]
+    n = int(args.dur * sr)
+    t = np.arange(n) / sr
+    beat = 60.0 / bpm
+    rng = np.random.default_rng(args.seed)
+    # A minor progression Am - F - C - G (one chord per bar of 4 beats)
+    roots = [220.0, 174.61, 261.63, 196.0]
+    thirds = [261.63, 220.0, 329.63, 246.94]
+    fifths = [329.63, 261.63, 392.0, 293.66]
+    bar = (t // (4 * beat)).astype(int) % 4
+    out = np.zeros(n)
+    env_bar = np.minimum(1, (t % (4 * beat)) / 0.4)
+    for f_tab, g in ((roots, .16), (thirds, .11), (fifths, .10)):
+        f = np.array(f_tab)[bar]
+        ph = 2 * np.pi * np.cumsum(f) / sr
+        out += g * env_bar * (np.sin(ph) + 0.3 * np.sin(2 * ph) + 0.15 * np.sin(ph * 1.003))
+    bass_f = np.array(roots)[bar] / 2
+    out += (0.10 if args.style == "cinematic" else 0.22) * np.sin(2 * np.pi * np.cumsum(bass_f) / sr)
+
+    def hits(every, length, shape):
+        sig = np.zeros(n)
+        k = 0.0
+        while k < args.dur:
+            i0 = int(k * sr)
+            seg = shape(np.arange(min(int(length * sr), n - i0)) / sr)
+            sig[i0:i0 + len(seg)] += seg
+            k += every
+        return sig
+
+    kick = lambda x: np.sin(2 * np.pi * (55 + 90 * np.exp(-x * 30)) * x) * np.exp(-x * 9)
+    hat = lambda x: rng.standard_normal(len(x)) * np.exp(-x * 60)
+    if args.style == "cinematic":
+        out += 0.35 * hits(beat * 2, 0.5, kick)                   # soft pulse on 1 and 3
+    else:
+        out *= 1 - 0.45 * np.exp(-((t % beat) / 0.12))            # sidechain: duck pads/bass only
+        out += 0.75 * hits(beat, 0.35, kick)                      # four on the floor, never ducked
+        out += 0.10 * hits(beat / 2, 0.05, hat)
+    fade = np.minimum(1, np.minimum(t / 1.0, (args.dur - t) / 2.0))
+    out = out * fade
+    out = out / (np.max(np.abs(out)) + 1e-9) * 0.8
+    st = np.stack([out, np.roll(out, 120)], axis=1)            # light stereo width
+    mdir = ws.briefs / "music"
+    mdir.mkdir(parents=True, exist_ok=True)
+    name = f"bed_{args.style}_{int(bpm)}bpm"
+    pcm = (st * 32767).astype("<i2").tobytes()
+    p = subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-f", "s16le",
+                        "-ar", str(sr), "-ac", "2", "-i", "-", "-c:a", "aac", "-b:a", "192k",
+                        str(mdir / f"{name}.m4a")], input=pcm, stderr=subprocess.PIPE)
+    if p.returncode:
+        sys.exit(p.stderr.decode()[-500:])
+    beats = [round(i * beat, 4) for i in range(int(args.dur / beat) + 1)]
+    save_json(mdir / f"{name}_beats.json", {"bpm": bpm, "beat_s": round(beat, 4), "style": args.style,
+                                           "beats": beats, "bars": beats[::4],
+                                           "licence": "original, generated by mit_studio.py - no third-party material"})
+    ws.logrow("music", time.time() - t0, file=f"{name}.m4a", bpm=bpm)
+    print(f"music: CREATIVE_BRIEFS/music/{name}.m4a  {bpm:g} BPM, beat {beat:.3f}s, {len(beats)} beats")
 
 
 # --------------------------------------------------------------------------- verify / status
@@ -939,6 +1048,11 @@ def main():
     s.add_argument("--hw", action="store_true", help="use Apple VideoToolbox encoder")
     s = sub.add_parser("qc"); s.add_argument("video"); s.add_argument("--width", type=int, default=1080)
     s.add_argument("--height", type=int, default=1920)
+    s.add_argument("--beats", help="beats JSON from the music command, to measure cut-to-beat sync")
+    s = sub.add_parser("music", help="original licence-free music bed + beat map")
+    s.add_argument("--style", choices=["cinematic", "energy", "corporate"], required=True)
+    s.add_argument("--bpm", type=float); s.add_argument("--dur", type=float, default=40)
+    s.add_argument("--seed", type=int, default=1)
     sub.add_parser("verify")
     sub.add_parser("status")
     a = ap.parse_args()

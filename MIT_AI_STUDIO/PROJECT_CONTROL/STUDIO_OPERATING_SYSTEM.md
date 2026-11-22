@@ -35,16 +35,19 @@ Brand codes in use: `MITEV` (MIT_eventss), `MIT`, `PO` (Palais Ouazzani), `ABU`
 | D Database | `database`, `annotate <json>` | Media Analyst | merges AI annotations; no re-analysis |
 | E Approve | `approve` | Creative Director | validates seg IDs, in/out, flags |
 | F Extract | `extract` | Video Editor | stream copy, only for CapCut hand-off |
-| G Render | `render <edl.json> [--hw]` | Video Editor | single encode, reads originals directly |
-| QC | `qc <video>` | Quality Controller | technical checks + 1 fps review sheet |
+| Music | `music --style cinematic\|energy\|corporate [--bpm N --dur S]` | Video Editor | original licence-free bed + beat map JSON |
+| G Render | `render <edl.json> [--hw]` | Video Editor | single encode, reads originals directly; end card can carry the official logo |
+| QC | `qc <video> [--beats <beats.json>]` | Quality Controller | technical checks incl. rhythm uniformity and cut-to-beat sync + 1 fps review sheet |
 | Verify | `verify` | Studio Manager | originals unchanged (size+mtime) |
 | Status | `status` | Studio Manager | ~20-line JSON summary |
 
 All commands: `python3 MIT_AI_STUDIO/ENGINE/mit_studio.py -w <workspace> <command>`.
 Long events: `detect --max-seconds 110` and repeat; the cache makes every run resume.
 
-**Detection logic (v1.1):** scene cut = colour-histogram jump **and** structural change
-(so stage-light colour changes are not cuts). Blur = Laplacian variance below 30 % of the
+**Detection logic (v1.2):** frame-accurate cuts from ffmpeg `scdet` in the same decode pass
+when frames are sampled; in keyframe mode, cut = colour-histogram jump **and** structural
+change (so stage-light colour changes are not cuts), refined with `scdet` around changes.
+Validated on a real MIT_eventss reel: 22/23 cuts, 0 false (REAL_FOOTAGE_VALIDATION). Blur = Laplacian variance below 30 % of the
 event median. Dark / overexposed / black by luma and clipped-pixel share. Duplicates =
 perceptual hash on the representative frame or at 25/50/75 % of the segment; the
 highest-resolution file is kept as master. Camera move from phase correlation.
@@ -98,7 +101,13 @@ Other job types: commercial ad → 1 hero ad + optional cut-down; corporate film
 7. Agent reports ≤ 15 lines, 5-field format.
 8. The Studio Manager reads `production_log.csv` at G10 and lists any wasted processing.
 
-## 6. Honest limits (v1.0)
+## 6. Privacy — this repository is PUBLIC
+Real event workspaces, footage images, client names and people's descriptions are git-ignored
+(`.gitignore`). Only synthetic `TEST_*` workspaces are committed. The logo copy in
+`PROJECT_CONTROL/brand_assets/` is local only. Change this rule only after the owner makes
+the repository private.
+
+## 7. Honest limits (v1.0)
 - Subagents are separate Claude instances with their own context and tools, but they are
   invoked by the Studio Manager; they do not run on their own.
 - Claude cannot hear. Music sync and audio are checked by measurement (loudness, peaks, cut
