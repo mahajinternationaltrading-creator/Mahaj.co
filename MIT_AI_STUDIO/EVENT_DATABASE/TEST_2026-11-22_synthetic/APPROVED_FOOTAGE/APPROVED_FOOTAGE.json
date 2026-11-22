@@ -1,0 +1,36 @@
+{
+ "event": "TEST_2026-11-22_synthetic",
+ "approved_by": "creative-director",
+ "approved_at": "2026-11-22",
+ "segments": [
+  {
+   "seg_id": "C0001-S02",
+   "for": [
+    "V01",
+    "V02",
+    "V03"
+   ]
+  },
+  {
+   "seg_id": "C0008-S01",
+   "for": [
+    "V01",
+    "V03"
+   ]
+  },
+  {
+   "seg_id": "C0006-S01",
+   "for": [
+    "V02",
+    "V01"
+   ]
+  },
+  {
+   "seg_id": "C0001-S01",
+   "for": [
+    "V03",
+    "V02"
+   ]
+  }
+ ]
+}

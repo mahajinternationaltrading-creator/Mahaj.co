@@ -1,0 +1,34 @@
+{
+  "mode": "keyframes",
+  "samples": 20,
+  "refined": 9,
+  "cuts": 1,
+  "segments": [
+    {
+      "seg_id": "C0007-S01",
+      "clip_id": "C0007",
+      "start": 0.0,
+      "end": 10.0,
+      "duration": 10.0,
+      "samples": 20,
+      "thumb_t": 0.0,
+      "luma": 27.1,
+      "dark": 0.6,
+      "bright": 0.0,
+      "sharp": 8551.7,
+      "sat": 23.9,
+      "motion": 11.98,
+      "camera": "handheld/active",
+      "dhash": 7661215384050178210,
+      "sig": [
+        16314404975007327185,
+        12900408096948824941,
+        10918388932424135526
+      ]
+    }
+  ],
+  "pipeline": "1.1",
+  "size": 9837321,
+  "mtime": 1795382409.5273054,
+  "seconds": 0.88
+}

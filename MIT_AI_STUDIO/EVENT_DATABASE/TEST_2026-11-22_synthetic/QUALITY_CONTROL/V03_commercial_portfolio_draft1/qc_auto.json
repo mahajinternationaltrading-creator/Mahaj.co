@@ -1,0 +1,79 @@
+{
+  "video": "V03_commercial_portfolio_draft1.mp4",
+  "probe": {
+    "codec": "h264",
+    "width": 1080,
+    "height": 1920,
+    "coded_w": 1080,
+    "coded_h": 1920,
+    "rotation": 0,
+    "fps": 30.0,
+    "duration": 35.1,
+    "orientation": "vertical",
+    "bitrate": 8224127,
+    "pix_fmt": "yuv420p",
+    "color_transfer": null,
+    "audio": true,
+    "audio_codec": "aac",
+    "creation_time": null
+  },
+  "checks": [
+    {
+      "check": "dimensions",
+      "pass": true,
+      "value": "1080x1920 (want 1080x1920)"
+    },
+    {
+      "check": "duration_30_40s",
+      "pass": true,
+      "value": "35.10s"
+    },
+    {
+      "check": "fps",
+      "pass": true,
+      "value": "30.0"
+    },
+    {
+      "check": "codec",
+      "pass": true,
+      "value": "h264/yuv420p"
+    },
+    {
+      "check": "no_black_gaps",
+      "pass": true,
+      "value": "[(32.1, 35.0667)]"
+    },
+    {
+      "check": "no_frozen_picture",
+      "pass": true,
+      "value": "[]"
+    },
+    {
+      "check": "audio_present",
+      "pass": true,
+      "value": "ok"
+    },
+    {
+      "check": "loudness_-16_to_-12_LUFS",
+      "pass": true,
+      "value": "-14.0"
+    },
+    {
+      "check": "true_peak_<=-1dB",
+      "pass": true,
+      "value": "-8.7"
+    },
+    {
+      "check": "hook_first_2s_active",
+      "pass": false,
+      "value": "motion 1.2, cuts 0"
+    },
+    {
+      "check": "hook_first_2s_not_dark",
+      "pass": true,
+      "value": "luma 103"
+    }
+  ],
+  "technical_pass": false,
+  "note": "Automatic checks only. Storytelling, rhythm, brand and objective are judged by the quality-controller agent from the review sheets; music/sync must be confirmed by ear."
+}

@@ -1,0 +1,176 @@
+{
+ "video_id": "V02_viral_energy",
+ "version": "draft1",
+ "transition": "cut",
+ "music": {
+  "file": "/tmp/claude-0/-home-user-Mahaj-co/65bee9d7-d49b-5d65-87a4-0280d0255141/scratchpad/music/test_bed.m4a",
+  "start": 0
+ },
+ "end_card": {
+  "dur": 2.0,
+  "line1": "MIT_eventss",
+  "line2": "[TEST] contact line from brand file"
+ },
+ "shots": [
+  {
+   "seg": "C0001-S02",
+   "in": 6,
+   "dur": 0.8,
+   "speed": 1.25
+  },
+  {
+   "seg": "C0006-S01",
+   "in": 0,
+   "dur": 0.8,
+   "speed": 1.0
+  },
+  {
+   "seg": "C0008-S01",
+   "in": 0,
+   "dur": 0.8,
+   "speed": 1.0
+  },
+  {
+   "seg": "C0001-S01",
+   "in": 0,
+   "dur": 0.8,
+   "speed": 1.25
+  },
+  {
+   "seg": "C0001-S02",
+   "in": 7.3,
+   "dur": 1.5,
+   "speed": 1.0
+  },
+  {
+   "seg": "C0006-S01",
+   "in": 1.1,
+   "dur": 1.5,
+   "speed": 1.0
+  },
+  {
+   "seg": "C0008-S01",
+   "in": 1.1,
+   "dur": 1.5,
+   "speed": 1.25
+  },
+  {
+   "seg": "C0001-S01",
+   "in": 1.3,
+   "dur": 1.5,
+   "speed": 1.0
+  },
+  {
+   "seg": "C0001-S02",
+   "in": 9.1,
+   "dur": 1.5,
+   "speed": 1.0
+  },
+  {
+   "seg": "C0006-S01",
+   "in": 2.9,
+   "dur": 1.5,
+   "speed": 1.25
+  },
+  {
+   "seg": "C0008-S01",
+   "in": 3.27,
+   "dur": 1.5,
+   "speed": 1.0
+  },
+  {
+   "seg": "C0001-S01",
+   "in": 3.1,
+   "dur": 1.5,
+   "speed": 1.0
+  },
+  {
+   "seg": "C0001-S02",
+   "in": 6,
+   "dur": 1.5,
+   "speed": 1.25
+  },
+  {
+   "seg": "C0006-S01",
+   "in": 5.08,
+   "dur": 1.5,
+   "speed": 1.0
+  },
+  {
+   "seg": "C0008-S01",
+   "in": 5.08,
+   "dur": 1.5,
+   "speed": 1.0
+  },
+  {
+   "seg": "C0001-S01",
+   "in": 0,
+   "dur": 1.5,
+   "speed": 1.25
+  },
+  {
+   "seg": "C0001-S02",
+   "in": 8.18,
+   "dur": 1.5,
+   "speed": 1.0
+  },
+  {
+   "seg": "C0006-S01",
+   "in": 6.88,
+   "dur": 1.5,
+   "speed": 1.0
+  },
+  {
+   "seg": "C0008-S01",
+   "in": 6.88,
+   "dur": 1.5,
+   "speed": 1.25
+  },
+  {
+   "seg": "C0001-S01",
+   "in": 2.17,
+   "dur": 1.5,
+   "speed": 1.0
+  },
+  {
+   "seg": "C0001-S02",
+   "in": 9.98,
+   "dur": 1.5,
+   "speed": 1.0
+  },
+  {
+   "seg": "C0006-S01",
+   "in": 0,
+   "dur": 1.5,
+   "speed": 1.25
+  },
+  {
+   "seg": "C0008-S01",
+   "in": 0,
+   "dur": 1.5,
+   "speed": 1.0
+  },
+  {
+   "seg": "C0001-S01",
+   "in": 3.97,
+   "dur": 1.5,
+   "speed": 1.0
+  }
+ ],
+ "text": [
+  {
+   "t": 0.0,
+   "dur": 2.0,
+   "text": "[TEST] HOOK LINE",
+   "pos": "top",
+   "size": 84
+  },
+  {
+   "t": 12,
+   "dur": 2.5,
+   "text": "[TEST] beat text",
+   "pos": "center",
+   "size": 72
+  }
+ ]
+}

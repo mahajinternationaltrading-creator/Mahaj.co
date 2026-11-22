@@ -1,0 +1,17 @@
+{
+  "event_code": "MITEV_YYYY-MM-DD_short-name",
+  "brand": "MIT_eventss",
+  "client": "",
+  "event_type": "",
+  "date": "",
+  "venue": "",
+  "city": "",
+  "language": ["FR"],
+  "objectives": ["client delivery", "MIT_eventss portfolio"],
+  "audience": "",
+  "must_show": [],
+  "must_avoid": [],
+  "consent_notes": "",
+  "music_source": "",
+  "source": "<absolute path to footage folder - read only>"
+}

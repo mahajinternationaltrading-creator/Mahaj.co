@@ -1,0 +1,42 @@
+{
+  "C0001-S02": {
+    "visual_description": "Synthetic fractal zoom, saturated colour, strong motion",
+    "people": "none",
+    "emotional_value": 3,
+    "storytelling": 2,
+    "marketing": 3,
+    "recommended_use": "energy cut / transition texture",
+    "tags": "TEST|motion"
+  },
+  "C0008-S01": {
+    "visual_description": "Vertical colour bars, slow hue drift (stand-in for stage lighting change)",
+    "people": "none",
+    "emotional_value": 2,
+    "storytelling": 3,
+    "marketing": 3,
+    "recommended_use": "atmosphere / venue establishing stand-in",
+    "tags": "TEST|lighting"
+  },
+  "C0006-S01": {
+    "visual_description": "Vertical moving particle field on dark ground (stand-in for crowd energy)",
+    "people": "none",
+    "emotional_value": 3,
+    "storytelling": 2,
+    "marketing": 2,
+    "recommended_use": "energy b-roll",
+    "tags": "TEST|crowd-standin"
+  },
+  "C0001-S01": {
+    "visual_description": "Static test pattern with moving element",
+    "people": "none",
+    "emotional_value": 1,
+    "storytelling": 2,
+    "marketing": 2,
+    "recommended_use": "portfolio filler only",
+    "tags": "TEST"
+  },
+  "C0004-S01": {
+    "reject": true,
+    "note": "blown highlights, no recoverable detail"
+  }
+}

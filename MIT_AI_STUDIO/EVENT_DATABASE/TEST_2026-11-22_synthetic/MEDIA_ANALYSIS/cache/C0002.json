@@ -1,0 +1,34 @@
+{
+  "mode": "keyframes",
+  "samples": 9,
+  "refined": 0,
+  "cuts": 0,
+  "segments": [
+    {
+      "seg_id": "C0002-S01",
+      "clip_id": "C0002",
+      "start": 0.0,
+      "end": 8.0,
+      "duration": 8.0,
+      "samples": 9,
+      "thumb_t": 6.9,
+      "luma": 127.2,
+      "dark": 0.0,
+      "bright": 0.0,
+      "sharp": 3.6,
+      "sat": 224.7,
+      "motion": 1.97,
+      "camera": "static",
+      "dhash": 16710579925595711463,
+      "sig": [
+        16710579925595711463,
+        16710579925595711463,
+        16710579925595711463
+      ]
+    }
+  ],
+  "pipeline": "1.1",
+  "size": 745602,
+  "mtime": 1795382391.5473049,
+  "seconds": 0.15
+}

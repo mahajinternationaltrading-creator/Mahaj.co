@@ -1,0 +1,56 @@
+{
+  "mode": "keyframes",
+  "samples": 30,
+  "refined": 18,
+  "cuts": 1,
+  "segments": [
+    {
+      "seg_id": "C0001-S01",
+      "clip_id": "C0001",
+      "start": 0.0,
+      "end": 6.0,
+      "duration": 6.0,
+      "samples": 9,
+      "thumb_t": 4.0,
+      "luma": 127.5,
+      "dark": 0.001,
+      "bright": 0.0,
+      "sharp": 492.3,
+      "sat": 246.6,
+      "motion": 2.11,
+      "camera": "static",
+      "dhash": 16710579925595711463,
+      "sig": [
+        16710579925595711463,
+        16710579925595711463,
+        16710579925595711463
+      ]
+    },
+    {
+      "seg_id": "C0001-S02",
+      "clip_id": "C0001",
+      "start": 6.0,
+      "end": 12.0,
+      "duration": 6.0,
+      "samples": 21,
+      "thumb_t": 10.5,
+      "luma": 138.6,
+      "dark": 0.0,
+      "bright": 0.0,
+      "sharp": 402.5,
+      "sat": 119.3,
+      "motion": 14.13,
+      "camera": "handheld/active",
+      "dhash": 725980468508759582,
+      "sig": [
+        16629409163642769351,
+        14376337886084471949,
+        725980468508759582
+      ]
+    }
+  ],
+  "pipeline": "1.1",
+  "size": 11193169,
+  "mtime": 1795382384.3513045,
+  "seconds": 1.31
+}

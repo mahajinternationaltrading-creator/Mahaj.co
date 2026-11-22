@@ -1,0 +1,112 @@
+{
+ "video_id": "V03_commercial_portfolio",
+ "version": "draft2",
+ "transition": "cut",
+ "music": {
+  "file": "/tmp/claude-0/-home-user-Mahaj-co/65bee9d7-d49b-5d65-87a4-0280d0255141/scratchpad/music/test_bed.m4a",
+  "start": 0
+ },
+ "end_card": {
+  "dur": 3.0,
+  "line1": "MIT_eventss",
+  "line2": "[TEST] contact line from brand file"
+ },
+ "shots": [
+  {
+   "seg": "C0001-S02",
+   "in": 6,
+   "dur": 1.2,
+   "speed": 1.0,
+   "note": "QC-R1: moving opener <=1.2s"
+  },
+  {
+   "seg": "C0008-S01",
+   "in": 0,
+   "dur": 2.4
+  },
+  {
+   "seg": "C0001-S01",
+   "in": 0,
+   "dur": 3
+  },
+  {
+   "seg": "C0001-S02",
+   "in": 6,
+   "dur": 3
+  },
+  {
+   "seg": "C0006-S01",
+   "in": 0,
+   "dur": 3
+  },
+  {
+   "seg": "C0008-S01",
+   "in": 3,
+   "dur": 3
+  },
+  {
+   "seg": "C0001-S01",
+   "in": 3,
+   "dur": 2.9
+  },
+  {
+   "seg": "C0001-S02",
+   "in": 9,
+   "dur": 2.9
+  },
+  {
+   "seg": "C0006-S01",
+   "in": 3.5,
+   "dur": 3
+  },
+  {
+   "seg": "C0008-S01",
+   "in": 6,
+   "dur": 2.9
+  },
+  {
+   "seg": "C0006-S01",
+   "in": 7,
+   "dur": 2.9
+  },
+  {
+   "seg": "C0001-S02",
+   "in": 6.5,
+   "dur": 2.5
+  }
+ ],
+ "text": [
+  {
+   "t": 0.9,
+   "dur": 2.6,
+   "text": "[TEST] Service 1",
+   "pos": "bottom"
+  },
+  {
+   "t": 6.8,
+   "dur": 2.6,
+   "text": "[TEST] Service 2",
+   "pos": "bottom"
+  },
+  {
+   "t": 12.8,
+   "dur": 2.6,
+   "text": "[TEST] Service 3",
+   "pos": "bottom"
+  },
+  {
+   "t": 18.8,
+   "dur": 2.6,
+   "text": "[TEST] Service 4",
+   "pos": "bottom"
+  }
+ ],
+ "corrections": [
+  {
+   "round": 1,
+   "from": "quality-controller",
+   "issue": "hook_first_2s_active FAIL: static 3s opening shot, 0 cuts, motion 1.2",
+   "fix": "insert 1.2s moving shot first; shorten shot 2 to 2.4s"
+  }
+ ]
+}

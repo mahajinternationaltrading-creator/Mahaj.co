@@ -1,0 +1,13 @@
+# media never goes into git: originals stay where they are, renders are delivered separately
+*.mp4
+*.mov
+*.m4v
+*.mkv
+*.m4a
+*.wav
+*.mp3
+MIT_AI_STUDIO/EVENT_DATABASE/*/MEDIA_ANALYSIS/thumbs/
+MIT_AI_STUDIO/EVENT_DATABASE/*/APPROVED_FOOTAGE/extracts/
+__pycache__/
+.DS_Store
+*.tmp
